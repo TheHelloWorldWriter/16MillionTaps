@@ -26,14 +26,21 @@ effort for your mind and eyes. So feel free to use Tap Color Mantra to take a br
 </a>
 
 ## Requirements
+
 * **Application requirements:** API level 10+ ("minSdkVersion 10")
 * **Development requirements:** Simply download Android Studio, import the GitHub project, and build it with Gradle.
 
 ## Contributing
 
 All contributions, large or small, major features, bug fixes, additional language translations are welcomed and appreciated. If you have
-found a bug or have an idea for a new feature, just [open a new issue](https://github.com/anaurelian/TapColorMantra-Android/issues/new).
+found a bug or have an idea for a new feature, just [open a new issue](https://github.com/TheHelloWorldWriter/16MillionTaps/issues/new).
 If you can implement it yourself, simply fork this repository, make your changes and open a pull request.
 
 ## License
-Tap Color Mantra is distributed under the Apache 2.0 [license](https://github.com/anaurelian/TapColorMantra-Android/blob/master/LICENSE).
+
+Tap Color Mantra is distributed under the [MIT License](LICENSE).
+
+---
+
+Made with ❤️ in Oradea, Romania  
+https://www.thehelloworldwriter.com
