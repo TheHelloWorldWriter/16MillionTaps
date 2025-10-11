@@ -62,6 +62,7 @@ class Utils {
             context.startActivity(intent);
         } catch (Exception e) {
             Toast.makeText(context, context.getString(R.string.toast_bad_url, url), Toast.LENGTH_LONG).show();
+            //noinspection CallToPrintStackTrace
             e.printStackTrace();
         }
     }

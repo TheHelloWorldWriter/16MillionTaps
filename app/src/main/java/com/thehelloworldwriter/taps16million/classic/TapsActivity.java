@@ -244,6 +244,7 @@ public class TapsActivity extends Activity implements View.OnClickListener {
         try {
             mCounter = Integer.parseInt(cheatValue);
         } catch (NumberFormatException e) {
+            //noinspection CallToPrintStackTrace
             e.printStackTrace();
         }
 
@@ -252,6 +253,7 @@ public class TapsActivity extends Activity implements View.OnClickListener {
             mColorTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize);
         } catch (NumberFormatException e) {
             // Ignore any invalid font sizes
+            //noinspection CallToPrintStackTrace
             e.printStackTrace();
         }
     }

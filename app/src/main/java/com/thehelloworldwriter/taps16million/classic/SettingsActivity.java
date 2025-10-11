@@ -54,6 +54,7 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
                 return true;
             }
         } catch (NumberFormatException e) {
+            //noinspection CallToPrintStackTrace
             e.printStackTrace();
         }
 
