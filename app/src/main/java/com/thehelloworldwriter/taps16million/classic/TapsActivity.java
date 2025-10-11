@@ -99,9 +99,6 @@ public class TapsActivity extends Activity implements View.OnClickListener {
         if (mCounter == 0) {
             Toast.makeText(this, R.string.toast_first_advice, Toast.LENGTH_LONG).show();
         }
-
-        // Always show the overflow menu even if the phone has a menu button
-        Utils.setOverflowMenuAlwaysOn(this);
     }
 
     /**
