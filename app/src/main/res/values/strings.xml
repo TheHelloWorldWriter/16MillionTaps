@@ -6,7 +6,7 @@
 <resources>
 
     <!-- App name -->
-    <string name="app_name">16 Million Taps</string>
+    <string name="app_name">16 Million Taps Classic</string>
 
     <!-- Main activity layout -->
     <string name="zero_counter">0</string>

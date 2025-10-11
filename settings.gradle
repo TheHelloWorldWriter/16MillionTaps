@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "16 Million Taps"
+rootProject.name = "16 Million Taps Classic"
 include ':app'
