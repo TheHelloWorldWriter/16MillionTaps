@@ -1,8 +1,8 @@
 /*
- * Copyright (C) 2014-2016 AnAurelian. All rights reserved.
- * https://anaurelian.com
+ * Copyright (C) 2014-2025 The Hello World Writer. All rights reserved.
+ * https://www.thehelloworldwriter.com/
  */
-package com.tecdrop.milliontaps;
+package com.thehelloworldwriter.taps16million.classic;
 
 import android.content.Context;
 import android.content.Intent;

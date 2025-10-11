@@ -3,13 +3,13 @@ plugins {
 }
 
 android {
-    namespace 'com.tecdrop.milliontaps'
+    namespace 'com.thehelloworldwriter.taps16million.classic'
     compileSdk {
         version = release(36)
     }
 
     defaultConfig {
-        applicationId "com.tecdrop.milliontaps"
+        applicationId "com.thehelloworldwriter.taps16million.classic"
         minSdk 16
         targetSdk 36
         versionCode 5
