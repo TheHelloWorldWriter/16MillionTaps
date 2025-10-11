@@ -1,8 +1,8 @@
 /*
- * Copyright (C) 2014-2016 AnAurelian. All rights reserved.
- * https://anaurelian.com
+ * Copyright (C) 2014-2025 The Hello World Writer. All rights reserved.
+ * https://www.thehelloworldwriter.com/
  */
-package com.tecdrop.milliontaps;
+package com.thehelloworldwriter.taps16million.classic;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -21,6 +21,7 @@ final class FormatUtils {
     private static void appendBinaryByte(StringBuilder sb, int value, boolean newLine) {
         sb.append(String.format("%1$8s", Integer.toBinaryString(value)).replace(' ', '0'));
         if (newLine) {
+            //noinspection SystemGetProperty
             sb.append(System.getProperty("line.separator"));
         }
     }
@@ -62,7 +63,7 @@ final class FormatUtils {
 
     /**
      * Return a duration formatted string.
-     * (Based on http://stackoverflow.com/a/9027379/220039)
+     * (Based on <a href="http://stackoverflow.com/a/9027379/220039">How to convert milliseconds to "hh:mm:ss" format?</a>)
      *
      * @param context A context for accessing string resources.
      * @param millis  The duration to format in milliseconds.

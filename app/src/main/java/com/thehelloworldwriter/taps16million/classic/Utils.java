@@ -1,19 +1,16 @@
 /*
- * Copyright (C) 2014-2016 AnAurelian. All rights reserved.
- * https://anaurelian.com
+ * Copyright (C) 2014-2025 The Hello World Writer. All rights reserved.
+ * https://www.thehelloworldwriter.com/
  */
-package com.tecdrop.milliontaps;
+package com.thehelloworldwriter.taps16million.classic;
 
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
-import android.view.ViewConfiguration;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
-
-import java.lang.reflect.Field;
 
 /**
  * Assorted utility methods.
@@ -62,6 +59,7 @@ class Utils {
             context.startActivity(intent);
         } catch (Exception e) {
             Toast.makeText(context, context.getString(R.string.toast_bad_url, url), Toast.LENGTH_LONG).show();
+            //noinspection CallToPrintStackTrace
             e.printStackTrace();
         }
     }
@@ -77,23 +75,5 @@ class Utils {
         lp.screenBrightness = fullBright ? WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_FULL :
                 WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE;
         window.setAttributes(lp);
-    }
-
-    /**
-     * Always show the overflow menu even if the phone has a menu button.
-     * <p>
-     * http://blog.vogella.com/2013/08/06/android-always-show-the-overflow-menu-even-if-the-phone-as-a-menu/
-     */
-    static void setOverflowMenuAlwaysOn(Context context) {
-        try {
-            ViewConfiguration config = ViewConfiguration.get(context);
-            Field menuKeyField = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");
-            if (menuKeyField != null) {
-                menuKeyField.setAccessible(true);
-                menuKeyField.setBoolean(config, false);
-            }
-        } catch (Exception ex) {
-            // Ignore
-        }
     }
 }
