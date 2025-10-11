@@ -68,7 +68,7 @@ public class TapsActivity extends Activity implements View.OnClickListener {
         setContentView(R.layout.activity_taps);
 
         // Get the color text view and set its onclick listener
-        mColorTextView = (TextView) findViewById(R.id.counter_text_view);
+        mColorTextView = findViewById(R.id.counter_text_view);
         mColorTextView.setOnClickListener(this);
 
         // Set the default preferences
@@ -171,10 +171,8 @@ public class TapsActivity extends Activity implements View.OnClickListener {
      */
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.counter_text_view:
-                nextCounter();
-                break;
+        if (view.getId() == R.id.counter_text_view) {
+            nextCounter();
         }
     }
 
@@ -197,38 +195,31 @@ public class TapsActivity extends Activity implements View.OnClickListener {
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-
-            case R.id.action_one_step_back:
-                // Oops, go back to the previous counter
-                previousCounter();
-                return true;
-
+        if (item.getItemId() == R.id.action_one_step_back) {
+            // Oops, go back to the previous counter
+            previousCounter();
+            return true;
+        } else if (item.getItemId() == R.id.action_copy) {
             // Copy the color code to the clipboard and informs the user with a toast
-            case R.id.action_copy:
-                String colorHex = Utils.colorToHex(mCounter);
-                Utils.copyText(this, getString(R.string.action_copy_label), colorHex);
-                Toast.makeText(this, getString(R.string.toast_copied, colorHex), Toast.LENGTH_LONG).show();
-                return true;
-
+            String colorHex = Utils.colorToHex(mCounter);
+            Utils.copyText(this, getString(R.string.action_copy_label), colorHex);
+            Toast.makeText(this, getString(R.string.toast_copied, colorHex), Toast.LENGTH_LONG).show();
+            return true;
+        } else if (item.getItemId() == R.id.action_settings) {
             // Start the Settings activity to allow the user to change app preferences
-            case R.id.action_settings:
-                final Intent settingsIntent = new Intent(this, SettingsActivity.class);
-                startActivity(settingsIntent);
-                return true;
-
+            final Intent settingsIntent = new Intent(this, SettingsActivity.class);
+            startActivity(settingsIntent);
+            return true;
+        } else if (item.getItemId() == R.id.action_rate) {
             // Open the Google Play app page to allow the user to rate the app
-            case R.id.action_rate:
-                Utils.viewUrl(this, getString(R.string.action_rate_url));
-                return true;
-
+            Utils.viewUrl(this, getString(R.string.action_rate_url));
+            return true;
+        } else if (item.getItemId() == R.id.action_help) {
             // Open the app home page for online help
-            case R.id.action_help:
-                Utils.viewUrl(this, getString(R.string.action_help_url));
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+            Utils.viewUrl(this, getString(R.string.action_help_url));
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
     }
 
