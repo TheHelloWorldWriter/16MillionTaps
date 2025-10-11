@@ -1,5 +1,11 @@
 # 16 Million Taps
 
+[![Version badge](https://img.shields.io/github/v/tag/TheHelloWorldWriter/16MillionTaps?color=forestgreen&label=version)](https://github.com/TheHelloWorldWriter/16MillionTaps/releases)
+[![MIT License badge](https://img.shields.io/github/license/TheHelloWorldWriter/16MillionTaps?color=9c0000)](LICENSE)
+[![GitHub Code Size badge](https://img.shields.io/github/languages/code-size/TheHelloWorldWriter/16MillionTaps)](https://github.com/TheHelloWorldWriter/16MillionTaps)
+[![Contributions Welcome badge](https://img.shields.io/badge/contributions-welcome-cornflowerblue)](#Contributing)
+![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/TheHelloWorldWriter/16MillionTaps/total)
+
 16 Million Taps is an app that counts your taps on your phone or tablet. With each touch the screen is filled with a different tint of color, whose RGB color code equals the number of taps so far. 0 is Black, 255 is Blue, 65,280 is Green, and 16,777,216 is White.
 
 A tapping app seems kind of useless, doesn't it? Just try it for a few minutes, or for a few thousand taps. You might experience your mind wandering off, relaxing, and even starting multiple "background threads" to solve forgotten problems. Kind of a tapping mantra, in which the repeated word or formula is replaced with ... taps on the screen.
