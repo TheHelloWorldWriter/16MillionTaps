@@ -3,30 +3,37 @@ import 'package:go_router/go_router.dart';
 
 import 'common/constants.dart' as constants;
 import 'common/strings.dart' as strings;
+import 'screens/info_screen.dart';
 import 'screens/settings_screen.dart';
 import 'screens/taps_screen.dart';
+import 'services/color_name_service.dart';
 import 'state/taps_controller.dart';
 import 'theme/app_theme.dart';
 
 /// The root widget. Wires the router and the light/dark themes (which follow the system).
 class SixteenMillionTapsApp extends StatelessWidget {
-  SixteenMillionTapsApp({super.key, required this.controller}) : _router = _buildRouter(controller);
+  SixteenMillionTapsApp({super.key, required this.controller, required this.colorNames})
+    : _router = _buildRouter(controller, colorNames);
 
   final TapsController controller;
+  final ColorNameService colorNames;
   final GoRouter _router;
 
-  static GoRouter _buildRouter(TapsController controller) {
+  static GoRouter _buildRouter(TapsController controller, ColorNameService colorNames) {
     return GoRouter(
       routes: [
         GoRoute(
           path: constants.tapsRoute,
-          builder: (context, state) => TapsScreen(controller: controller),
+          builder: (context, state) => TapsScreen(controller: controller, colorNames: colorNames),
+        ),
+        GoRoute(
+          path: constants.infoRoute,
+          builder: (context, state) => InfoScreen(controller: controller, colorNames: colorNames),
         ),
         GoRoute(
           path: constants.settingsRoute,
           builder: (context, state) => SettingsScreen(controller: controller),
         ),
-        // The /info route is added with the Info screen in a later phase.
       ],
     );
   }

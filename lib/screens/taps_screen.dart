@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../common/constants.dart';
 import '../common/strings.dart' as strings;
+import '../services/color_name_service.dart';
 import '../services/url_launcher.dart';
 import '../state/taps_controller.dart';
 import '../utils/color_utils.dart' as color_utils;
@@ -13,9 +14,10 @@ import '../widgets/taps_app_bar.dart';
 
 /// The main screen: tap anywhere to advance the count and fill the screen with the matching color.
 class TapsScreen extends StatefulWidget {
-  const TapsScreen({super.key, required this.controller});
+  const TapsScreen({super.key, required this.controller, required this.colorNames});
 
   final TapsController controller;
+  final ColorNameService colorNames;
 
   @override
   State<TapsScreen> createState() => _TapsScreenState();
@@ -25,11 +27,11 @@ class _TapsScreenState extends State<TapsScreen> {
   @override
   void initState() {
     super.initState();
-    if (widget.controller.count == minCount) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (mounted) _showMessage(strings.firstTapHint);
-      });
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      widget.colorNames.ensureLoaded();
+      if (widget.controller.count == minCount) _showMessage(strings.firstTapHint);
+    });
   }
 
   void _showMessage(String message) {
@@ -54,6 +56,8 @@ class _TapsScreenState extends State<TapsScreen> {
     widget.controller.decrement();
   }
 
+  void _onInfo() => context.push(infoRoute);
+
   Future<void> _copyColor() async {
     final hex = color_utils.hexWithHash(widget.controller.count);
     await Clipboard.setData(ClipboardData(text: hex));
@@ -77,7 +81,7 @@ class _TapsScreenState extends State<TapsScreen> {
   @override
   Widget build(BuildContext context) {
     return ListenableBuilder(
-      listenable: widget.controller,
+      listenable: Listenable.merge([widget.controller, widget.colorNames]),
       builder: (context, _) {
         final controller = widget.controller;
         final formatDecimal = MaterialLocalizations.of(context).formatDecimal;
@@ -87,6 +91,7 @@ class _TapsScreenState extends State<TapsScreen> {
             backgroundColor: controller.fillColor,
             foregroundColor: controller.contrastColor,
             onStepBack: _onStepBack,
+            onInfo: _onInfo,
             onMenuAction: _onMenuAction,
           ),
           body: GestureDetector(
@@ -105,6 +110,7 @@ class _TapsScreenState extends State<TapsScreen> {
                         fontSize: controller.counterFontSize,
                         color: controller.contrastColor,
                         formatDecimal: formatDecimal,
+                        colorName: widget.colorNames.nameFor(controller.count),
                       ),
                     ),
                   ),

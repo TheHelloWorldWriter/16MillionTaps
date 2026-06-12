@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../utils/counter_formatter.dart';
 
-/// Renders the counter in the chosen numeral system, scaled down to fit the available space so large numbers and the three-line binary form never overflow.
+/// The centered counter in the chosen numeral system, scaled down to fit the width so large numbers and the three-line binary form never overflow, with the color name shown subtly below when one exists.
 class CounterDisplay extends StatelessWidget {
   const CounterDisplay({
     super.key,
@@ -11,6 +11,7 @@ class CounterDisplay extends StatelessWidget {
     required this.fontSize,
     required this.color,
     required this.formatDecimal,
+    this.colorName,
   });
 
   final int count;
@@ -18,18 +19,32 @@ class CounterDisplay extends StatelessWidget {
   final double fontSize;
   final Color color;
   final String Function(int count) formatDecimal;
+  final String? colorName;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(24),
-      child: FittedBox(
-        fit: BoxFit.scaleDown,
-        child: Text(
-          formatCount(count, numeralSystem, formatDecimal: formatDecimal),
-          textAlign: TextAlign.center,
-          style: TextStyle(color: color, fontSize: fontSize, height: 1.2),
-        ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              formatCount(count, numeralSystem, formatDecimal: formatDecimal),
+              textAlign: TextAlign.center,
+              style: TextStyle(color: color, fontSize: fontSize, height: 1.2),
+            ),
+          ),
+          if (colorName != null) ...[
+            const SizedBox(height: 16),
+            Text(
+              colorName!,
+              textAlign: TextAlign.center,
+              style: TextStyle(color: color.withValues(alpha: 0.7), fontSize: 16),
+            ),
+          ],
+        ],
       ),
     );
   }

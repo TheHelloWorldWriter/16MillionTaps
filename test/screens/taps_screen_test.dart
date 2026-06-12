@@ -1,15 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sixteen_million_taps/screens/taps_screen.dart';
+import 'package:sixteen_million_taps/services/color_name_service.dart';
 import 'package:sixteen_million_taps/state/taps_controller.dart';
 
 import '../fakes/fake_settings_store.dart';
 
 void main() {
-  Future<TapsController> pumpScreen(WidgetTester tester, FakeSettingsStore store) async {
+  Future<TapsController> pumpScreen(
+    WidgetTester tester,
+    FakeSettingsStore store, {
+    ColorNameService? colorNames,
+  }) async {
     final controller = TapsController(store);
     addTearDown(controller.dispose);
-    await tester.pumpWidget(MaterialApp(home: TapsScreen(controller: controller)));
+    await tester.pumpWidget(
+      MaterialApp(
+        home: TapsScreen(
+          controller: controller,
+          colorNames: colorNames ?? ColorNameService.withNames(const {}),
+        ),
+      ),
+    );
     return controller;
   }
 
@@ -35,5 +47,14 @@ void main() {
   testWidgets('shows the count in the saved numeral system', (tester) async {
     await pumpScreen(tester, FakeSettingsStore(count: 255, numeralSystemRadix: 16));
     expect(find.text('0000FF'), findsOneWidget);
+  });
+
+  testWidgets('shows the color name when one exists', (tester) async {
+    await pumpScreen(
+      tester,
+      FakeSettingsStore(count: 0x112358),
+      colorNames: ColorNameService.withNames({0x112358: 'Fibonacci Blue'}),
+    );
+    expect(find.text('Fibonacci Blue'), findsOneWidget);
   });
 }
