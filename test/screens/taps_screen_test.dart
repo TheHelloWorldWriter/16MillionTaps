@@ -1,22 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sixteen_million_taps/screens/taps_screen.dart';
-import 'package:sixteen_million_taps/services/settings_repository.dart';
 import 'package:sixteen_million_taps/state/taps_controller.dart';
 
-class FakeSettingsStore implements SettingsStore {
-  FakeSettingsStore({this.count = 0, this.totalTapSeconds = 0});
-
-  @override
-  int count;
-  @override
-  int totalTapSeconds;
-
-  @override
-  Future<void> setCount(int value) async => count = value;
-  @override
-  Future<void> setTotalTapSeconds(int value) async => totalTapSeconds = value;
-}
+import '../fakes/fake_settings_store.dart';
 
 void main() {
   Future<TapsController> pumpScreen(WidgetTester tester, FakeSettingsStore store) async {
@@ -42,7 +29,11 @@ void main() {
 
   testWidgets('resumes from the saved count, grouped in decimal', (tester) async {
     await pumpScreen(tester, FakeSettingsStore(count: 1000));
-
     expect(find.text('1,000'), findsOneWidget);
+  });
+
+  testWidgets('shows the count in the saved numeral system', (tester) async {
+    await pumpScreen(tester, FakeSettingsStore(count: 255, numeralSystemRadix: 16));
+    expect(find.text('0000FF'), findsOneWidget);
   });
 }

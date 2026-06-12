@@ -1,0 +1,63 @@
+import 'package:flutter/material.dart';
+
+import '../common/strings.dart' as strings;
+
+/// The overflow-menu actions on the tap screen's app bar.
+enum TapsMenuAction { settings, copyColor, rate, help }
+
+/// The tap screen's color-matched app bar: a visible step-back button plus an overflow menu.
+class TapsAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const TapsAppBar({
+    super.key,
+    required this.backgroundColor,
+    required this.foregroundColor,
+    required this.onStepBack,
+    required this.onMenuAction,
+  });
+
+  final Color backgroundColor;
+  final Color foregroundColor;
+  final VoidCallback onStepBack;
+  final void Function(TapsMenuAction action) onMenuAction;
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      backgroundColor: backgroundColor,
+      foregroundColor: foregroundColor,
+      elevation: 0,
+      scrolledUnderElevation: 0,
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.undo),
+          tooltip: strings.goBackAction,
+          onPressed: onStepBack,
+        ),
+        PopupMenuButton<TapsMenuAction>(
+          onSelected: onMenuAction,
+          itemBuilder: (context) => const <PopupMenuEntry<TapsMenuAction>>[
+            PopupMenuItem<TapsMenuAction>(
+              value: TapsMenuAction.settings,
+              child: Text(strings.settingsAction),
+            ),
+            PopupMenuItem<TapsMenuAction>(
+              value: TapsMenuAction.copyColor,
+              child: Text(strings.copyColorAction),
+            ),
+            PopupMenuItem<TapsMenuAction>(
+              value: TapsMenuAction.rate,
+              child: Text(strings.rateAction),
+            ),
+            PopupMenuItem<TapsMenuAction>(
+              value: TapsMenuAction.help,
+              child: Text(strings.helpAction),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}

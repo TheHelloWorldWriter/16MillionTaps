@@ -49,9 +49,6 @@ const String textSizeSmallLabel = 'Small';
 const String textSizeMediumLabel = 'Medium';
 const String textSizeLargeLabel = 'Large';
 
-const String fullBrightnessTitle = 'Full screen brightness';
-const String fullBrightnessSummary = 'View the colors in all their splendor';
-
 const String cheatModeTitle = 'Cheat mode';
 const String cheatModeSummary = 'Jump directly to any number (not recommended)';
 const String cheatModeDialogTitle = 'Jump directly to (any number between 0 and 16,777,215)';

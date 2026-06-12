@@ -9,6 +9,12 @@ abstract interface class SettingsStore {
 
   int get totalTapSeconds;
   Future<void> setTotalTapSeconds(int value);
+
+  int? get numeralSystemRadix;
+  Future<void> setNumeralSystemRadix(int radix);
+
+  String? get counterTextSizeName;
+  Future<void> setCounterTextSizeName(String name);
 }
 
 /// A [SettingsStore] backed by shared_preferences via the cached API, so reads are synchronous once [create] has completed.
@@ -24,7 +30,6 @@ class SettingsRepository implements SettingsStore {
           prefCountKey,
           prefNumeralSystemKey,
           prefCounterTextSizeKey,
-          prefFullBrightnessKey,
           prefTotalTapSecondsKey,
         },
       ),
@@ -34,13 +39,22 @@ class SettingsRepository implements SettingsStore {
 
   @override
   int get count => _prefs.getInt(prefCountKey) ?? minCount;
-
   @override
   Future<void> setCount(int value) => _prefs.setInt(prefCountKey, value);
 
   @override
   int get totalTapSeconds => _prefs.getInt(prefTotalTapSecondsKey) ?? 0;
-
   @override
   Future<void> setTotalTapSeconds(int value) => _prefs.setInt(prefTotalTapSecondsKey, value);
+
+  @override
+  int? get numeralSystemRadix => _prefs.getInt(prefNumeralSystemKey);
+  @override
+  Future<void> setNumeralSystemRadix(int radix) => _prefs.setInt(prefNumeralSystemKey, radix);
+
+  @override
+  String? get counterTextSizeName => _prefs.getString(prefCounterTextSizeKey);
+  @override
+  Future<void> setCounterTextSizeName(String name) =>
+      _prefs.setString(prefCounterTextSizeKey, name);
 }

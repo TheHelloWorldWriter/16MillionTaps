@@ -13,7 +13,6 @@ const String rateUrl = 'https://www.thehelloworldwriter.com/16milliontaps/rate/'
 const String prefCountKey = 'count';
 const String prefNumeralSystemKey = 'numeral_system';
 const String prefCounterTextSizeKey = 'counter_text_size';
-const String prefFullBrightnessKey = 'full_brightness';
 const String prefTotalTapSecondsKey = 'total_tap_seconds';
 
 // Route paths.

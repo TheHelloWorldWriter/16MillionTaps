@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import 'common/constants.dart' as constants;
 import 'common/strings.dart' as strings;
+import 'screens/settings_screen.dart';
 import 'screens/taps_screen.dart';
 import 'state/taps_controller.dart';
 import 'theme/app_theme.dart';
@@ -21,7 +22,11 @@ class SixteenMillionTapsApp extends StatelessWidget {
           path: constants.tapsRoute,
           builder: (context, state) => TapsScreen(controller: controller),
         ),
-        // The /info and /settings routes are added with their screens in later phases.
+        GoRoute(
+          path: constants.settingsRoute,
+          builder: (context, state) => SettingsScreen(controller: controller),
+        ),
+        // The /info route is added with the Info screen in a later phase.
       ],
     );
   }
