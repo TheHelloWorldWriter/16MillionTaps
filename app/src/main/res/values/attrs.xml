@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
-    Copyright (C) 2014-2025 The Hello World Writer. All rights reserved.
-    https://www.thehelloworldwriter.com/
--->
-<resources>
-    <attr name="actionBarCorrection" format="dimension"/>
-</resources>
