@@ -18,7 +18,7 @@ const String theEnd = 'Done. Where can one go from here?';
 /// Screen-reader label for the full-screen tap target.
 const String tapToCountSemantic = 'Tap to count';
 
-String copiedColor(String value) => 'Color code $value copied to clipboard.';
+String copiedColor(String value) => '$value copied to clipboard.';
 String cannotOpenUrl(String url) => 'Cannot open $url';
 
 // -------------------------------------------------------------------------------

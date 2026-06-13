@@ -58,11 +58,13 @@ class _TapsScreenState extends State<TapsScreen> {
 
   void _onInfo() => context.push(infoRoute);
 
-  Future<void> _copyColor() async {
-    final hex = color_utils.hexWithHash(widget.controller.count);
-    await Clipboard.setData(ClipboardData(text: hex));
-    if (!mounted) return;
-    _showMessage(strings.copiedColor(hex));
+  void _copyColor() {
+    final count = widget.controller.count;
+    final hex = color_utils.hexWithHash(count);
+    final name = widget.colorNames.nameFor(count);
+    final text = name == null ? hex : '$name $hex';
+    Clipboard.setData(ClipboardData(text: text));
+    _showMessage(strings.copiedColor(text));
   }
 
   void _onMenuAction(TapsMenuAction action) {

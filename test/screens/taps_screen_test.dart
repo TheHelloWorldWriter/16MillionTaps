@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:sixteen_million_taps/common/strings.dart' as strings;
 import 'package:sixteen_million_taps/screens/taps_screen.dart';
 import 'package:sixteen_million_taps/services/color_name_service.dart';
 import 'package:sixteen_million_taps/state/taps_controller.dart';
@@ -56,5 +57,31 @@ void main() {
       colorNames: ColorNameService.withNames({0x112358: 'Fibonacci Blue'}),
     );
     expect(find.text('Fibonacci Blue'), findsOneWidget);
+  });
+
+  testWidgets('Copy color copies the name and hex for a named color', (tester) async {
+    await pumpScreen(
+      tester,
+      FakeSettingsStore(count: 0x112358),
+      colorNames: ColorNameService.withNames({0x112358: 'Fibonacci Blue'}),
+    );
+
+    await tester.tap(find.byIcon(Icons.more_vert));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(strings.copyColorAction));
+    await tester.pumpAndSettle();
+
+    expect(find.text(strings.copiedColor('Fibonacci Blue #112358')), findsOneWidget);
+  });
+
+  testWidgets('Copy color copies just the hex for an unnamed color', (tester) async {
+    await pumpScreen(tester, FakeSettingsStore(count: 0x000001));
+
+    await tester.tap(find.byIcon(Icons.more_vert));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(strings.copyColorAction));
+    await tester.pumpAndSettle();
+
+    expect(find.text(strings.copiedColor('#000001')), findsOneWidget);
   });
 }
