@@ -59,6 +59,29 @@ void main() {
     expect(find.text('Fibonacci Blue'), findsOneWidget);
   });
 
+  testWidgets('counter holds its position whether or not the color is named', (tester) async {
+    const count = 0x112358;
+    const decimal = '1,123,160';
+
+    await pumpScreen(
+      tester,
+      FakeSettingsStore(count: count),
+      colorNames: ColorNameService.withNames({count: 'Fibonacci Blue'}),
+    );
+    expect(find.text('Fibonacci Blue'), findsOneWidget);
+    final namedY = tester.getTopLeft(find.text(decimal)).dy;
+
+    await pumpScreen(
+      tester,
+      FakeSettingsStore(count: count),
+      colorNames: ColorNameService.withNames(const {}),
+    );
+    expect(find.text('Fibonacci Blue'), findsNothing);
+    final unnamedY = tester.getTopLeft(find.text(decimal)).dy;
+
+    expect(namedY, unnamedY);
+  });
+
   testWidgets('Copy color copies the name and hex for a named color', (tester) async {
     await pumpScreen(
       tester,
