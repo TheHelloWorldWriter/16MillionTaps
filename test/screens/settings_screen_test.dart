@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:sixteen_million_taps/app.dart';
 import 'package:sixteen_million_taps/common/strings.dart' as strings;
 import 'package:sixteen_million_taps/screens/settings_screen.dart';
+import 'package:sixteen_million_taps/services/color_name_service.dart';
 import 'package:sixteen_million_taps/state/taps_controller.dart';
 import 'package:sixteen_million_taps/utils/counter_formatter.dart';
 
@@ -59,18 +61,34 @@ void main() {
     expect(controller.count, 100);
   });
 
-  testWidgets('jump-to-number accepts a valid number and updates the count', (tester) async {
-    final controller = await pumpSettings(tester, FakeSettingsStore(count: 100));
+  testWidgets('jumping to a number applies it and returns to the Taps screen', (tester) async {
+    final controller = TapsController(FakeSettingsStore(count: 100));
+    addTearDown(controller.dispose);
+    await tester.pumpWidget(
+      SixteenMillionTapsApp(
+        controller: controller,
+        colorNames: ColorNameService.withNames(const {}),
+      ),
+    );
+    await tester.pumpAndSettle();
 
+    // Taps -> Settings -> cheat dialog, both reached via the app-bar overflow.
+    await tester.tap(find.byIcon(Icons.more_vert));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(strings.settingsAction));
+    await tester.pumpAndSettle();
     await tester.tap(find.byIcon(Icons.more_vert));
     await tester.pumpAndSettle();
     await tester.tap(find.text(strings.cheatModeTitle));
     await tester.pumpAndSettle();
+
     await tester.enterText(find.byType(TextField), '500');
     await tester.tap(find.text('OK'));
     await tester.pumpAndSettle();
 
     expect(controller.count, 500);
+    expect(find.text(strings.settingsTitle), findsNothing);
+    expect(find.text('500'), findsOneWidget);
   });
 
   testWidgets('cheat mode lives in the app-bar overflow, not a row', (tester) async {

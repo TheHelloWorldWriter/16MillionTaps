@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../common/constants.dart';
 import '../common/strings.dart' as strings;
@@ -81,7 +82,10 @@ class SettingsScreen extends StatelessWidget {
       context: context,
       builder: (context) => _JumpToNumberDialog(initialValue: controller.count),
     );
-    if (value != null) controller.jumpTo(value);
+    if (value == null) return;
+    controller.jumpTo(value);
+    // The jump's payoff is the color on the Taps screen, so return there to show it.
+    if (context.mounted) context.go(tapsRoute);
   }
 }
 

@@ -36,6 +36,8 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text(strings.settingsAction).last);
     await tester.pumpAndSettle();
+    await tester.tap(find.byIcon(Icons.more_vert));
+    await tester.pumpAndSettle();
     await tester.tap(find.text(strings.cheatModeTitle));
     await tester.pumpAndSettle();
 
