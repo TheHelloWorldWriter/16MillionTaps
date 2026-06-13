@@ -67,46 +67,67 @@ class SettingsScreen extends StatelessWidget {
   }
 
   Future<void> _jumpToNumber(BuildContext context) async {
-    final field = TextEditingController(text: controller.count.toString());
-    final localizations = MaterialLocalizations.of(context);
     final value = await showDialog<int>(
       context: context,
-      builder: (context) {
-        String? errorText;
-        return StatefulBuilder(
-          builder: (context, setState) {
-            return AlertDialog(
-              title: const Text(strings.cheatModeDialogTitle),
-              content: TextField(
-                controller: field,
-                autofocus: true,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(errorText: errorText),
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: Text(localizations.cancelButtonLabel),
-                ),
-                TextButton(
-                  onPressed: () {
-                    final parsed = int.tryParse(field.text);
-                    if (parsed == null || parsed < minCount || parsed > maxCount) {
-                      setState(() => errorText = strings.cheatModeBadNumber);
-                    } else {
-                      Navigator.pop(context, parsed);
-                    }
-                  },
-                  child: Text(localizations.okButtonLabel),
-                ),
-              ],
-            );
-          },
-        );
-      },
+      builder: (context) => _JumpToNumberDialog(initialValue: controller.count),
     );
-    field.dispose();
     if (value != null) controller.jumpTo(value);
+  }
+}
+
+/// Asks for a target count and validates it against the range, popping the chosen
+/// value (or null on cancel). Owns its text controller so it is disposed only once
+/// the dialog has fully left the tree.
+class _JumpToNumberDialog extends StatefulWidget {
+  const _JumpToNumberDialog({required this.initialValue});
+
+  final int initialValue;
+
+  @override
+  State<_JumpToNumberDialog> createState() => _JumpToNumberDialogState();
+}
+
+class _JumpToNumberDialogState extends State<_JumpToNumberDialog> {
+  late final TextEditingController _field = TextEditingController(
+    text: widget.initialValue.toString(),
+  );
+  String? _errorText;
+
+  @override
+  void dispose() {
+    _field.dispose();
+    super.dispose();
+  }
+
+  void _submit() {
+    final parsed = int.tryParse(_field.text);
+    if (parsed == null || parsed < minCount || parsed > maxCount) {
+      setState(() => _errorText = strings.cheatModeBadNumber);
+    } else {
+      Navigator.pop(context, parsed);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final localizations = MaterialLocalizations.of(context);
+    return AlertDialog(
+      title: const Text(strings.cheatModeDialogTitle),
+      content: TextField(
+        controller: _field,
+        autofocus: true,
+        keyboardType: TextInputType.number,
+        decoration: InputDecoration(errorText: _errorText),
+        onSubmitted: (_) => _submit(),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: Text(localizations.cancelButtonLabel),
+        ),
+        TextButton(onPressed: _submit, child: Text(localizations.okButtonLabel)),
+      ],
+    );
   }
 }
 

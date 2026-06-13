@@ -1,11 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 /// The opaque color whose RGB value equals [count] (0 = black, 0xFFFFFF = white).
 Color colorForCount(int count) => Color(0xFF000000 | (count & 0xFFFFFF));
 
-/// Black or white, whichever stays legible on [color].
-Color contrastColor(Color color) =>
-    ThemeData.estimateBrightnessForColor(color) == Brightness.dark ? Colors.white : Colors.black;
+/// Black or white, whichever gives the higher WCAG contrast against [color].
+/// Picking the better of the two keeps text on every fill at >= 4.5:1 (AA),
+/// which a fixed brightness threshold cannot guarantee near its cutoff.
+Color contrastColor(Color color) {
+  final luminance = color.computeLuminance();
+  final whiteContrast = 1.05 / (luminance + 0.05);
+  final blackContrast = (luminance + 0.05) / 0.05;
+  return whiteContrast >= blackContrast ? Colors.white : Colors.black;
+}
+
+/// Transparent system bars whose icons take [contrastColor], so they stay legible
+/// over the live fill drawn behind them in edge-to-edge mode (Android).
+SystemUiOverlayStyle systemOverlayStyleFor(Color contrastColor) {
+  final lightIcons = contrastColor == Colors.white;
+  final iconBrightness = lightIcons ? Brightness.light : Brightness.dark;
+  return SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+    statusBarIconBrightness: iconBrightness,
+    statusBarBrightness: lightIcons ? Brightness.dark : Brightness.light,
+    systemNavigationBarColor: Colors.transparent,
+    systemNavigationBarIconBrightness: iconBrightness,
+    systemNavigationBarContrastEnforced: false,
+  );
+}
 
 /// Six uppercase hex digits with no leading `#` (for on-screen display).
 String hex(int count) => (count & 0xFFFFFF).toRadixString(16).padLeft(6, '0').toUpperCase();

@@ -94,27 +94,34 @@ class _TapsScreenState extends State<TapsScreen> {
             onInfo: _onInfo,
             onMenuAction: _onMenuAction,
           ),
-          body: GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: _onTap,
-            child: SafeArea(
-              top: false,
-              child: Column(
-                children: [
-                  ProgressHairline(progress: controller.progress, color: controller.contrastColor),
-                  Expanded(
-                    child: Center(
-                      child: CounterDisplay(
-                        count: controller.count,
-                        numeralSystem: controller.numeralSystem,
-                        fontSize: controller.counterFontSize,
-                        color: controller.contrastColor,
-                        formatDecimal: formatDecimal,
-                        colorName: widget.colorNames.nameFor(controller.count),
+          body: Semantics(
+            button: true,
+            label: strings.tapToCountSemantic,
+            child: GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: _onTap,
+              child: SafeArea(
+                top: false,
+                child: Column(
+                  children: [
+                    ProgressHairline(
+                      progress: controller.progress,
+                      color: controller.contrastColor,
+                    ),
+                    Expanded(
+                      child: Center(
+                        child: CounterDisplay(
+                          count: controller.count,
+                          numeralSystem: controller.numeralSystem,
+                          fontSize: controller.counterFontSize,
+                          color: controller.contrastColor,
+                          formatDecimal: formatDecimal,
+                          colorName: widget.colorNames.nameFor(controller.count),
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

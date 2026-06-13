@@ -8,7 +8,7 @@ const int maxCount = 0xFFFFFF;
 /// The bundled color-name dataset (a hex -> name map).
 const String colorNamesAsset = 'assets/color_names.json';
 
-// External links opened from the app bar. Rate points at the brand page until a store listing exists.
+// External links opened from the app bar. Rate points at a brand-page redirect that will fan out to store listings once they exist.
 const String helpUrl = 'https://www.thehelloworldwriter.com/16milliontaps/';
 const String rateUrl = 'https://www.thehelloworldwriter.com/16milliontaps/rate/';
 

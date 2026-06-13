@@ -19,6 +19,28 @@ void main() {
     test('black on white', () {
       expect(contrastColor(const Color(0xFFFFFFFF)), Colors.black);
     });
+
+    test('meets WCAG AA (>= 4.5:1) on every grey fill', () {
+      for (var g = 0; g <= 0xFF; g++) {
+        final fill = colorForCount(g << 16 | g << 8 | g);
+        expect(
+          _contrastRatio(fill, contrastColor(fill)),
+          greaterThanOrEqualTo(4.5),
+          reason: 'grey 0x${g.toRadixString(16)}',
+        );
+      }
+    });
+
+    test('meets WCAG AA (>= 4.5:1) across a broad colour sweep', () {
+      for (var count = 0; count <= 0xFFFFFF; count += 0x000101) {
+        final fill = colorForCount(count);
+        expect(
+          _contrastRatio(fill, contrastColor(fill)),
+          greaterThanOrEqualTo(4.5),
+          reason: 'count $count',
+        );
+      }
+    });
   });
 
   group('hex', () {
@@ -38,4 +60,13 @@ void main() {
       expect(rgb(0), '0, 0, 0');
     });
   });
+}
+
+/// WCAG relative-luminance contrast ratio between two colors.
+double _contrastRatio(Color a, Color b) {
+  final la = a.computeLuminance();
+  final lb = b.computeLuminance();
+  final lighter = la > lb ? la : lb;
+  final darker = la > lb ? lb : la;
+  return (lighter + 0.05) / (darker + 0.05);
 }

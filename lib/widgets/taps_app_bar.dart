@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../common/strings.dart' as strings;
+import '../utils/color_utils.dart' as color_utils;
 
 /// The overflow-menu actions on the tap screen's app bar.
 enum TapsMenuAction { settings, copyColor, rate, help }
@@ -32,6 +33,7 @@ class TapsAppBar extends StatelessWidget implements PreferredSizeWidget {
       foregroundColor: foregroundColor,
       elevation: 0,
       scrolledUnderElevation: 0,
+      systemOverlayStyle: color_utils.systemOverlayStyleFor(foregroundColor),
       actions: [
         IconButton(
           icon: const Icon(Icons.undo),

@@ -15,6 +15,9 @@ const String firstTapHint = 'Start tapping: 0... 1... 2... 16,777,215';
 const String noGoingBack = 'Sorry, no going back from 0';
 const String theEnd = 'Done. Where can one go from here?';
 
+/// Screen-reader label for the full-screen tap target.
+const String tapToCountSemantic = 'Tap to count';
+
 String copiedColor(String value) => 'Color code $value copied to clipboard.';
 String cannotOpenUrl(String url) => 'Cannot open $url';
 
@@ -67,7 +70,7 @@ const String infoHex = 'Hex triplet';
 const String infoRgb = 'RGB';
 const String infoTimeSpent = 'Time spent';
 const String infoNoColorName = 'No name';
-const String infoCopyTooltip = 'Copy value';
+String infoCopyValueTooltip(String label) => 'Copy $label';
 String infoCopied(String value) => '$value copied to clipboard';
 
 // -------------------------------------------------------------------------------

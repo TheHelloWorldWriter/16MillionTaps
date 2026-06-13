@@ -40,6 +40,7 @@ class InfoScreen extends StatelessWidget {
             foregroundColor: onColor,
             elevation: 0,
             scrolledUnderElevation: 0,
+            systemOverlayStyle: color_utils.systemOverlayStyleFor(onColor),
             title: const Text(strings.infoTitle),
           ),
           body: SafeArea(
@@ -92,7 +93,7 @@ class _InfoRow extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.copy, size: 20),
             color: color,
-            tooltip: strings.infoCopyTooltip,
+            tooltip: strings.infoCopyValueTooltip(label),
             onPressed: () => _copy(context),
           ),
         ],

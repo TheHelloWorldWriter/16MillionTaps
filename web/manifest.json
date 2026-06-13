@@ -1,11 +1,11 @@
 {
-    "name": "sixteen_million_taps",
-    "short_name": "sixteen_million_taps",
+    "name": "16 Million Taps",
+    "short_name": "16M Taps",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#000000",
+    "theme_color": "#000000",
+    "description": "A calming, mantra-like color tap counter: every tap fills the screen with the color of the count, from black to white.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
