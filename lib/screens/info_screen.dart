@@ -45,12 +45,15 @@ class InfoScreen extends StatelessWidget {
           ),
           body: SafeArea(
             top: false,
-            child: ListView(
-              padding: const EdgeInsets.all(16),
-              children: [
-                for (final (label, value) in rows)
-                  _InfoRow(label: label, value: value, color: onColor),
-              ],
+            child: ListView.separated(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              itemCount: rows.length,
+              separatorBuilder: (context, _) =>
+                  Divider(height: 1, thickness: 1, color: onColor.withValues(alpha: 0.2)),
+              itemBuilder: (context, index) {
+                final (label, value) = rows[index];
+                return _InfoRow(label: label, value: value, color: onColor);
+              },
             ),
           ),
         );
@@ -59,7 +62,7 @@ class InfoScreen extends StatelessWidget {
   }
 }
 
-/// A single labelled value with a copy button.
+/// A row showing a value over its label, with a button that copies the value.
 class _InfoRow extends StatelessWidget {
   const _InfoRow({required this.label, required this.value, required this.color});
 
@@ -76,27 +79,17 @@ class _InfoRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      child: Row(
-        children: [
-          SizedBox(
-            width: 110,
-            child: Text(label, style: TextStyle(color: color.withValues(alpha: 0.7))),
-          ),
-          Expanded(
-            child: Text(
-              value,
-              style: TextStyle(color: color, fontWeight: FontWeight.w500),
-            ),
-          ),
-          IconButton(
-            icon: const Icon(Icons.copy, size: 20),
-            color: color,
-            tooltip: strings.infoCopyValueTooltip(label),
-            onPressed: () => _copy(context),
-          ),
-        ],
+    return ListTile(
+      title: Text(
+        value,
+        style: TextStyle(color: color, fontWeight: FontWeight.w500),
+      ),
+      subtitle: Text(label, style: TextStyle(color: color.withValues(alpha: 0.7))),
+      trailing: IconButton(
+        icon: const Icon(Icons.copy, size: 20),
+        color: color,
+        tooltip: strings.infoCopyValueTooltip(label),
+        onPressed: () => _copy(context),
       ),
     );
   }
