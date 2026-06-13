@@ -53,8 +53,9 @@ const String textSizeMediumLabel = 'Medium';
 const String textSizeLargeLabel = 'Large';
 
 const String cheatModeTitle = 'Cheat mode';
-const String cheatModeSummary = 'Jump directly to any number (not recommended)';
-const String cheatModeDialogTitle = 'Jump directly to (any number between 0 and 16,777,215)';
+const String cheatModeDialogTitle = 'Jump to a number';
+const String cheatModeDialogBody =
+    'Any number, 0 to 16,777,215 - though the slow way is the point.';
 const String cheatModeBadNumber = 'Enter a number between 0 and 16,777,215';
 
 // -------------------------------------------------------------------------------

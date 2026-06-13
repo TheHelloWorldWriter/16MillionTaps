@@ -5,7 +5,9 @@ import '../common/strings.dart' as strings;
 import '../state/taps_controller.dart';
 import '../utils/counter_formatter.dart';
 
-/// The neutral, themed settings screen: numeral system, counter text size, and jump-to-number.
+enum _SettingsMenuAction { cheatMode }
+
+/// The neutral, themed settings screen: numeral system and counter text size as rows, with cheat mode (jump-to-number) tucked into the app-bar overflow menu.
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key, required this.controller});
 
@@ -14,7 +16,20 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text(strings.settingsTitle)),
+      appBar: AppBar(
+        title: const Text(strings.settingsTitle),
+        actions: [
+          PopupMenuButton<_SettingsMenuAction>(
+            onSelected: (_) => _jumpToNumber(context),
+            itemBuilder: (context) => const [
+              PopupMenuItem(
+                value: _SettingsMenuAction.cheatMode,
+                child: Text(strings.cheatModeTitle),
+              ),
+            ],
+          ),
+        ],
+      ),
       body: ListenableBuilder(
         listenable: controller,
         builder: (context, _) {
@@ -31,11 +46,6 @@ class SettingsScreen extends StatelessWidget {
                 title: const Text(strings.counterTextSizeTitle),
                 subtitle: Text(_textSizeLabel(controller.counterTextSize)),
                 onTap: () => _pickTextSize(context),
-              ),
-              ListTile(
-                title: const Text(strings.cheatModeTitle),
-                subtitle: const Text(strings.cheatModeSummary),
-                onTap: () => _jumpToNumber(context),
               ),
             ],
           );
@@ -113,12 +123,20 @@ class _JumpToNumberDialogState extends State<_JumpToNumberDialog> {
     final localizations = MaterialLocalizations.of(context);
     return AlertDialog(
       title: const Text(strings.cheatModeDialogTitle),
-      content: TextField(
-        controller: _field,
-        autofocus: true,
-        keyboardType: TextInputType.number,
-        decoration: InputDecoration(errorText: _errorText),
-        onSubmitted: (_) => _submit(),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(strings.cheatModeDialogBody),
+          const SizedBox(height: 16),
+          TextField(
+            controller: _field,
+            autofocus: true,
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(errorText: _errorText),
+            onSubmitted: (_) => _submit(),
+          ),
+        ],
       ),
       actions: [
         TextButton(

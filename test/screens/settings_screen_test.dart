@@ -47,6 +47,8 @@ void main() {
   testWidgets('jump-to-number rejects out-of-range input and keeps the count', (tester) async {
     final controller = await pumpSettings(tester, FakeSettingsStore(count: 100));
 
+    await tester.tap(find.byIcon(Icons.more_vert));
+    await tester.pumpAndSettle();
     await tester.tap(find.text(strings.cheatModeTitle));
     await tester.pumpAndSettle();
     await tester.enterText(find.byType(TextField), '99999999');
@@ -60,6 +62,8 @@ void main() {
   testWidgets('jump-to-number accepts a valid number and updates the count', (tester) async {
     final controller = await pumpSettings(tester, FakeSettingsStore(count: 100));
 
+    await tester.tap(find.byIcon(Icons.more_vert));
+    await tester.pumpAndSettle();
     await tester.tap(find.text(strings.cheatModeTitle));
     await tester.pumpAndSettle();
     await tester.enterText(find.byType(TextField), '500');
@@ -67,5 +71,16 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(controller.count, 500);
+  });
+
+  testWidgets('cheat mode lives in the app-bar overflow, not a row', (tester) async {
+    await pumpSettings(tester, FakeSettingsStore());
+
+    expect(find.text(strings.cheatModeTitle), findsNothing);
+
+    await tester.tap(find.byIcon(Icons.more_vert));
+    await tester.pumpAndSettle();
+
+    expect(find.text(strings.cheatModeTitle), findsOneWidget);
   });
 }
