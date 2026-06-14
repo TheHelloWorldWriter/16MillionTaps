@@ -24,6 +24,7 @@ class TapsController extends ChangeNotifier with WidgetsBindingObserver {
     _totalTapSeconds = _store.totalTapSeconds;
     _numeralSystem = _numeralSystemFromRadix(_store.numeralSystemRadix);
     _counterTextSize = _counterTextSizeFromName(_store.counterTextSizeName);
+    _showProgressHairline = _store.showProgressHairline ?? false;
     _stopwatch.start();
     WidgetsBinding.instance.addObserver(this);
   }
@@ -35,11 +36,13 @@ class TapsController extends ChangeNotifier with WidgetsBindingObserver {
   late int _totalTapSeconds;
   late NumeralSystem _numeralSystem;
   late CounterTextSize _counterTextSize;
+  late bool _showProgressHairline;
 
   int get count => _count;
   NumeralSystem get numeralSystem => _numeralSystem;
   CounterTextSize get counterTextSize => _counterTextSize;
   double get counterFontSize => _counterTextSize.fontSize;
+  bool get showProgressHairline => _showProgressHairline;
 
   Color get fillColor => color_utils.colorForCount(_count);
   Color get contrastColor => color_utils.contrastColor(fillColor);
@@ -81,6 +84,13 @@ class TapsController extends ChangeNotifier with WidgetsBindingObserver {
     _counterTextSize = value;
     notifyListeners();
     _store.setCounterTextSizeName(value.name);
+  }
+
+  set showProgressHairline(bool value) {
+    if (value == _showProgressHairline) return;
+    _showProgressHairline = value;
+    notifyListeners();
+    _store.setShowProgressHairline(value);
   }
 
   void _setCount(int value) {

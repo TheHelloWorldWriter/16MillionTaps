@@ -7,6 +7,7 @@ class FakeSettingsStore implements SettingsStore {
     this.totalTapSeconds = 0,
     this.numeralSystemRadix,
     this.counterTextSizeName,
+    this.showProgressHairline,
   });
 
   @override
@@ -17,6 +18,8 @@ class FakeSettingsStore implements SettingsStore {
   int? numeralSystemRadix;
   @override
   String? counterTextSizeName;
+  @override
+  bool? showProgressHairline;
 
   @override
   Future<void> setCount(int value) async => count = value;
@@ -26,4 +29,6 @@ class FakeSettingsStore implements SettingsStore {
   Future<void> setNumeralSystemRadix(int radix) async => numeralSystemRadix = radix;
   @override
   Future<void> setCounterTextSizeName(String name) async => counterTextSizeName = name;
+  @override
+  Future<void> setShowProgressHairline(bool value) async => showProgressHairline = value;
 }

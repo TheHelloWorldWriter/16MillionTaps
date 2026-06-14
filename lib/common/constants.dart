@@ -17,6 +17,7 @@ const String prefCountKey = 'count';
 const String prefNumeralSystemKey = 'numeral_system';
 const String prefCounterTextSizeKey = 'counter_text_size';
 const String prefTotalTapSecondsKey = 'total_tap_seconds';
+const String prefShowProgressHairlineKey = 'show_progress_hairline';
 
 // Route paths.
 const String tapsRoute = '/';

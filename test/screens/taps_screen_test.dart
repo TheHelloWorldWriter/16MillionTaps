@@ -4,6 +4,7 @@ import 'package:sixteen_million_taps/common/strings.dart' as strings;
 import 'package:sixteen_million_taps/screens/taps_screen.dart';
 import 'package:sixteen_million_taps/services/color_name_service.dart';
 import 'package:sixteen_million_taps/state/taps_controller.dart';
+import 'package:sixteen_million_taps/widgets/progress_hairline.dart';
 
 import '../fakes/fake_settings_store.dart';
 
@@ -106,5 +107,15 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text(strings.copiedColor('#000001')), findsOneWidget);
+  });
+
+  testWidgets('hides the progress hairline by default', (tester) async {
+    await pumpScreen(tester, FakeSettingsStore());
+    expect(find.byType(ProgressHairline), findsNothing);
+  });
+
+  testWidgets('shows the progress hairline when enabled', (tester) async {
+    await pumpScreen(tester, FakeSettingsStore(showProgressHairline: true));
+    expect(find.byType(ProgressHairline), findsOneWidget);
   });
 }

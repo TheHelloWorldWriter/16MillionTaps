@@ -101,4 +101,14 @@ void main() {
 
     expect(find.text(strings.cheatModeTitle), findsOneWidget);
   });
+
+  testWidgets('toggling the progress indicator updates the controller', (tester) async {
+    final controller = await pumpSettings(tester, FakeSettingsStore());
+    expect(controller.showProgressHairline, isFalse);
+
+    await tester.tap(find.byType(SwitchListTile));
+    await tester.pumpAndSettle();
+
+    expect(controller.showProgressHairline, isTrue);
+  });
 }

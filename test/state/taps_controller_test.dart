@@ -44,4 +44,27 @@ void main() {
     controller.jumpTo(1000);
     expect(controller.count, 1000);
   });
+
+  test('defaults the progress hairline off', () {
+    final controller = TapsController(FakeSettingsStore());
+    addTearDown(controller.dispose);
+    expect(controller.showProgressHairline, isFalse);
+  });
+
+  test('loads the saved progress-hairline preference', () {
+    final controller = TapsController(FakeSettingsStore(showProgressHairline: true));
+    addTearDown(controller.dispose);
+    expect(controller.showProgressHairline, isTrue);
+  });
+
+  test('toggling the progress hairline persists it', () {
+    final store = FakeSettingsStore();
+    final controller = TapsController(store);
+    addTearDown(controller.dispose);
+
+    controller.showProgressHairline = true;
+
+    expect(controller.showProgressHairline, isTrue);
+    expect(store.showProgressHairline, isTrue);
+  });
 }

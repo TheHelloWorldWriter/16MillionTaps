@@ -48,6 +48,12 @@ class SettingsScreen extends StatelessWidget {
                 subtitle: Text(_textSizeLabel(controller.counterTextSize)),
                 onTap: () => _pickTextSize(context),
               ),
+              SwitchListTile(
+                title: const Text(strings.progressIndicatorTitle),
+                subtitle: const Text(strings.progressIndicatorSubtitle),
+                value: controller.showProgressHairline,
+                onChanged: (value) => controller.showProgressHairline = value,
+              ),
             ],
           );
         },

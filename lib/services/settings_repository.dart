@@ -15,6 +15,9 @@ abstract interface class SettingsStore {
 
   String? get counterTextSizeName;
   Future<void> setCounterTextSizeName(String name);
+
+  bool? get showProgressHairline;
+  Future<void> setShowProgressHairline(bool value);
 }
 
 /// A [SettingsStore] backed by shared_preferences via the cached API, so reads are synchronous once [create] has completed.
@@ -31,6 +34,7 @@ class SettingsRepository implements SettingsStore {
           prefNumeralSystemKey,
           prefCounterTextSizeKey,
           prefTotalTapSecondsKey,
+          prefShowProgressHairlineKey,
         },
       ),
     );
@@ -57,4 +61,10 @@ class SettingsRepository implements SettingsStore {
   @override
   Future<void> setCounterTextSizeName(String name) =>
       _prefs.setString(prefCounterTextSizeKey, name);
+
+  @override
+  bool? get showProgressHairline => _prefs.getBool(prefShowProgressHairlineKey);
+  @override
+  Future<void> setShowProgressHairline(bool value) =>
+      _prefs.setBool(prefShowProgressHairlineKey, value);
 }

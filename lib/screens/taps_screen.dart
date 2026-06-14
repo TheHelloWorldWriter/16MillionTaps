@@ -106,10 +106,11 @@ class _TapsScreenState extends State<TapsScreen> {
                 top: false,
                 child: Column(
                   children: [
-                    ProgressHairline(
-                      progress: controller.progress,
-                      color: controller.contrastColor,
-                    ),
+                    if (controller.showProgressHairline)
+                      ProgressHairline(
+                        progress: controller.progress,
+                        color: controller.contrastColor,
+                      ),
                     Expanded(
                       child: Center(
                         child: CounterDisplay(
