@@ -130,7 +130,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byIcon(Icons.more_vert));
     await tester.pumpAndSettle();
-    await tester.tap(find.text(strings.resetAction));
+    await tester.tap(find.text(strings.resetTitle));
     await tester.pumpAndSettle();
     await tester.tap(find.widgetWithText(TextButton, strings.resetAction));
     await tester.pumpAndSettle();
@@ -146,7 +146,7 @@ void main() {
 
     await tester.tap(find.byIcon(Icons.more_vert));
     await tester.pumpAndSettle();
-    await tester.tap(find.text(strings.resetAction));
+    await tester.tap(find.text(strings.resetTitle));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Cancel'));
     await tester.pumpAndSettle();

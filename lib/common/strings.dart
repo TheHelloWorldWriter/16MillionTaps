@@ -62,10 +62,11 @@ const String cheatModeDialogBody =
     'Any number, 0 to 16,777,215 - though the slow way is the point.';
 const String cheatModeBadNumber = 'Enter a number between 0 and 16,777,215';
 
+const String resetTitle = 'Reset journey';
 const String resetAction = 'Reset';
-const String resetDialogTitle = 'Start over?';
+const String resetDialogTitle = 'Reset journey?';
 const String resetDialogBody =
-    'Sets the count back to 0 - black again - and clears your time in the app. This cannot be undone.';
+    'Sets the count back to 0 and clears your time in the app. This cannot be undone.';
 
 // -------------------------------------------------------------------------------
 // Info screen

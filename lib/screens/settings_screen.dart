@@ -29,7 +29,7 @@ class SettingsScreen extends StatelessWidget {
               ),
               PopupMenuItem(
                 value: _SettingsMenuAction.reset,
-                child: Text(strings.resetAction),
+                child: Text(strings.resetTitle),
               ),
             ],
           ),
