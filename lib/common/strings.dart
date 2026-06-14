@@ -53,7 +53,8 @@ const String textSizeMediumLabel = 'Medium';
 const String textSizeLargeLabel = 'Large';
 
 const String progressIndicatorTitle = 'Progress indicator';
-const String progressIndicatorSubtitle = 'A faint line showing your place from black to white';
+const String progressIndicatorSubtitle =
+    'A faint line showing your place on the journey from black to white';
 
 const String cheatModeTitle = 'Cheat mode';
 const String cheatModeDialogTitle = 'Jump to a number';
