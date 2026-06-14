@@ -6,6 +6,9 @@ import 'package:flutter/painting.dart';
 /// The side length of the square share image, in pixels.
 const double _imageSize = 1080;
 
+/// Line height for the (possibly multi-line) count, shared by layout and fitting.
+const double _countLineHeight = 1.2;
+
 /// Renders the full-bleed "share journey" card to a square PNG: the color fill,
 /// the count centered and scaled to fit, the color name just below it when there
 /// is one, and the app [url] near the bottom - all drawn in [contrast].
@@ -31,13 +34,15 @@ Future<Uint8List> renderColorCard({
   final url0 = _painter(url, fontSize: size * 0.028, color: muted, boxWidth: boxWidth, maxLines: 1);
   url0.paint(canvas, Offset(margin, size - margin - url0.height));
 
-  final countFontSize = _fittedFontSize(countText, size * 0.16, boxWidth);
+  // Keep the count from dominating: a smaller base, capped in width and height so
+  // wide numbers (the three-line binary form and 7-8 digit decimals) shrink to fit.
+  final countFontSize = _fittedFontSize(countText, size * 0.14, size * 0.66, size * 0.34);
   final count0 = _painter(
     countText,
     fontSize: countFontSize,
     color: contrast,
     boxWidth: boxWidth,
-    height: 1.2,
+    height: _countLineHeight,
   );
   final name0 = colorName == null
       ? null
@@ -80,14 +85,18 @@ TextPainter _painter(
   )..layout(minWidth: boxWidth, maxWidth: boxWidth);
 }
 
-/// Shrinks [fontSize] so the widest line of [text] fits within [maxWidth].
-double _fittedFontSize(String text, double fontSize, double maxWidth) {
+/// Shrinks [fontSize] so [text] fits within both [maxWidth] and [maxHeight],
+/// never enlarging it. Measured at the same line height the count is drawn with.
+double _fittedFontSize(String text, double fontSize, double maxWidth, double maxHeight) {
   final probe = TextPainter(
     text: TextSpan(
       text: text,
-      style: TextStyle(fontSize: fontSize),
+      style: TextStyle(fontSize: fontSize, height: _countLineHeight),
     ),
+    textAlign: TextAlign.center,
     textDirection: TextDirection.ltr,
   )..layout();
-  return probe.width > maxWidth ? fontSize * maxWidth / probe.width : fontSize;
+  final widthScale = probe.width > maxWidth ? maxWidth / probe.width : 1.0;
+  final heightScale = probe.height > maxHeight ? maxHeight / probe.height : 1.0;
+  return fontSize * (widthScale < heightScale ? widthScale : heightScale);
 }
