@@ -17,7 +17,7 @@ Future<void> main() async {
   final repository = await SettingsRepository.create();
   runApp(
     SixteenMillionTapsApp(
-      controller: TapsController(repository, soundPlayer: AudioplayersTapSoundPlayer()),
+      controller: TapsController(repository, soundPlayer: SoloudTapSoundPlayer()),
       colorNames: ColorNameService(),
     ),
   );

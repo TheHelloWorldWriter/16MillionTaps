@@ -40,8 +40,7 @@ dependencies:
   go_router: ^17.3.0
   shared_preferences: ^2.5.5
   url_launcher: ^6.3.2
-  audioplayers: ^6.7.1
-
+  flutter_soloud: ^4.0.9
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -1,4 +1,4 @@
-import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter_soloud/flutter_soloud.dart';
 
 /// A selectable per-tap sound. [asset] is the bundled file under `assets/sounds/`, or null for [none] (silent).
 enum TapSound {
@@ -22,7 +22,7 @@ abstract interface class TapSoundPlayer {
   /// Loads [sound] so the next [play] is instant; [TapSound.none] stays silent.
   void setSound(TapSound sound);
 
-  /// Restarts the loaded sound from the start, cutting off any still-playing instance.
+  /// Plays the loaded sound. Fast taps mix as overlapping voices rather than cutting each other off.
   void play();
 
   void dispose();
@@ -42,34 +42,78 @@ class SilentTapSoundPlayer implements TapSoundPlayer {
   void dispose() {}
 }
 
-/// A [TapSoundPlayer] backed by a single warm `audioplayers` player, so a fast tap restarts the sound (seek to start) instead of layering overlapping copies.
-class AudioplayersTapSoundPlayer implements TapSoundPlayer {
-  AudioplayersTapSoundPlayer() {
-    _player.setReleaseMode(ReleaseMode.stop);
-  }
+/// A [TapSoundPlayer] backed by the SoLoud engine. Each tap plays a fresh, low-latency voice that mixes with any still-sounding ones, so rapid taps stay in rhythm without the crackle or drop-outs of restarting a single clip player.
+class SoloudTapSoundPlayer implements TapSoundPlayer {
+  final SoLoud _soloud = SoLoud.instance;
 
-  final AudioPlayer _player = AudioPlayer();
   TapSound _sound = TapSound.none;
+  AudioSource? _source;
+
+  // Loading is async and lazily starts the engine, so [_generation] discards a
+  // slow load once the selection has moved on, and [_playWhenReady] lets a
+  // preview fire as soon as the sound is ready.
+  int _generation = 0;
+  bool _playWhenReady = false;
 
   @override
   void setSound(TapSound sound) {
+    if (sound == _sound) return;
     _sound = sound;
+    _playWhenReady = false;
+    final generation = ++_generation;
+    _disposeSource();
     final asset = sound.asset;
-    if (asset == null) {
-      _player.stop();
-    } else {
-      // Preload so the first tap is not delayed by a fetch and decode.
-      _player.setSource(AssetSource('sounds/$asset'));
+    if (asset != null) {
+      _loadSource('assets/sounds/$asset', generation);
+    }
+  }
+
+  Future<void> _loadSource(String assetKey, int generation) async {
+    try {
+      if (!_soloud.isInitialized) {
+        await _soloud.init();
+      }
+      if (generation != _generation) return;
+      final source = await _soloud.loadAsset(assetKey);
+      if (generation != _generation) {
+        await _soloud.disposeSource(source);
+        return;
+      }
+      _source = source;
+      if (_playWhenReady) {
+        _playWhenReady = false;
+        _soloud.play(source);
+      }
+    } catch (_) {
+      // Audio is a non-critical enhancement; on failure, stay silent.
     }
   }
 
   @override
   void play() {
-    if (_sound.isSilent) return;
-    _player.seek(Duration.zero);
-    _player.resume();
+    final source = _source;
+    if (source != null) {
+      _soloud.play(source);
+    } else if (!_sound.isSilent) {
+      // Still loading (e.g. a preview right after a pick); fire once ready.
+      _playWhenReady = true;
+    }
   }
 
   @override
-  void dispose() => _player.dispose();
+  void dispose() {
+    _generation++;
+    _source = null;
+    if (_soloud.isInitialized) {
+      _soloud.deinit();
+    }
+  }
+
+  void _disposeSource() {
+    final source = _source;
+    if (source != null) {
+      _soloud.disposeSource(source);
+      _source = null;
+    }
+  }
 }
