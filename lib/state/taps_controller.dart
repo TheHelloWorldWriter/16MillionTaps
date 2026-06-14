@@ -72,6 +72,16 @@ class TapsController extends ChangeNotifier with WidgetsBindingObserver {
     _setCount(value);
   }
 
+  /// Starts over: count back to 0 and the accumulated foreground time (including the live session) back to zero. Display settings are left untouched.
+  void reset() {
+    _count = minCount;
+    _totalTapSeconds = 0;
+    _stopwatch.reset();
+    notifyListeners();
+    _store.setCount(_count);
+    _store.setTotalTapSeconds(_totalTapSeconds);
+  }
+
   set numeralSystem(NumeralSystem value) {
     if (value == _numeralSystem) return;
     _numeralSystem = value;

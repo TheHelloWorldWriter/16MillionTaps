@@ -6,9 +6,9 @@ import '../common/strings.dart' as strings;
 import '../state/taps_controller.dart';
 import '../utils/counter_formatter.dart';
 
-enum _SettingsMenuAction { cheatMode }
+enum _SettingsMenuAction { cheatMode, reset }
 
-/// The neutral, themed settings screen: numeral system and counter text size as rows, with cheat mode (jump-to-number) tucked into the app-bar overflow menu.
+/// The neutral, themed settings screen: numeral system and counter text size as rows, with cheat mode (jump-to-number) and reset tucked into the app-bar overflow menu.
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key, required this.controller});
 
@@ -21,11 +21,15 @@ class SettingsScreen extends StatelessWidget {
         title: const Text(strings.settingsTitle),
         actions: [
           PopupMenuButton<_SettingsMenuAction>(
-            onSelected: (_) => _jumpToNumber(context),
+            onSelected: (action) => _onMenuAction(context, action),
             itemBuilder: (context) => const [
               PopupMenuItem(
                 value: _SettingsMenuAction.cheatMode,
                 child: Text(strings.cheatModeTitle),
+              ),
+              PopupMenuItem(
+                value: _SettingsMenuAction.reset,
+                child: Text(strings.resetAction),
               ),
             ],
           ),
@@ -93,6 +97,26 @@ class SettingsScreen extends StatelessWidget {
     // The jump's payoff is the color on the Taps screen, so return there to show it.
     if (context.mounted) context.go(tapsRoute);
   }
+
+  void _onMenuAction(BuildContext context, _SettingsMenuAction action) {
+    switch (action) {
+      case _SettingsMenuAction.cheatMode:
+        _jumpToNumber(context);
+      case _SettingsMenuAction.reset:
+        _reset(context);
+    }
+  }
+
+  Future<void> _reset(BuildContext context) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => const _ResetDialog(),
+    );
+    if (confirmed != true) return;
+    controller.reset();
+    // Show the fresh start: a black Taps screen at 0.
+    if (context.mounted) context.go(tapsRoute);
+  }
 }
 
 /// Asks for a target count and validates it against the range, popping the chosen
@@ -154,6 +178,33 @@ class _JumpToNumberDialogState extends State<_JumpToNumberDialog> {
           child: Text(localizations.cancelButtonLabel),
         ),
         TextButton(onPressed: _submit, child: Text(localizations.okButtonLabel)),
+      ],
+    );
+  }
+}
+
+/// Confirms the destructive reset, popping true only when the user approves.
+class _ResetDialog extends StatelessWidget {
+  const _ResetDialog();
+
+  @override
+  Widget build(BuildContext context) {
+    final localizations = MaterialLocalizations.of(context);
+    return AlertDialog(
+      title: const Text(strings.resetDialogTitle),
+      content: const Text(strings.resetDialogBody),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context, false),
+          child: Text(localizations.cancelButtonLabel),
+        ),
+        TextButton(
+          style: TextButton.styleFrom(
+            foregroundColor: Theme.of(context).colorScheme.error,
+          ),
+          onPressed: () => Navigator.pop(context, true),
+          child: const Text(strings.resetAction),
+        ),
       ],
     );
   }

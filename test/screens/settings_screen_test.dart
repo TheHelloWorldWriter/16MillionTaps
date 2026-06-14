@@ -111,4 +111,47 @@ void main() {
 
     expect(controller.showProgressHairline, isTrue);
   });
+
+  testWidgets('reset clears the count and time and returns to the Taps screen', (tester) async {
+    final controller = TapsController(FakeSettingsStore(count: 500, totalTapSeconds: 4000));
+    addTearDown(controller.dispose);
+    await tester.pumpWidget(
+      SixteenMillionTapsApp(
+        controller: controller,
+        colorNames: ColorNameService.withNames(const {}),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    // Taps -> Settings -> overflow -> Reset -> confirm.
+    await tester.tap(find.byIcon(Icons.more_vert));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(strings.settingsAction));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byIcon(Icons.more_vert));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(strings.resetAction));
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(TextButton, strings.resetAction));
+    await tester.pumpAndSettle();
+
+    expect(controller.count, 0);
+    expect(controller.totalTapTime, Duration.zero);
+    expect(find.text(strings.settingsTitle), findsNothing);
+  });
+
+  testWidgets('cancelling reset keeps the count and time', (tester) async {
+    final store = FakeSettingsStore(count: 500, totalTapSeconds: 4000);
+    final controller = await pumpSettings(tester, store);
+
+    await tester.tap(find.byIcon(Icons.more_vert));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(strings.resetAction));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Cancel'));
+    await tester.pumpAndSettle();
+
+    expect(controller.count, 500);
+    expect(store.totalTapSeconds, 4000);
+  });
 }

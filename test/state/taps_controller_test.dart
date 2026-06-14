@@ -67,4 +67,17 @@ void main() {
     expect(controller.showProgressHairline, isTrue);
     expect(store.showProgressHairline, isTrue);
   });
+
+  test('reset returns the count and time to zero and persists', () {
+    final store = FakeSettingsStore(count: 1000, totalTapSeconds: 4000);
+    final controller = TapsController(store);
+    addTearDown(controller.dispose);
+
+    controller.reset();
+
+    expect(controller.count, 0);
+    expect(controller.totalTapTime, Duration.zero);
+    expect(store.count, 0);
+    expect(store.totalTapSeconds, 0);
+  });
 }
