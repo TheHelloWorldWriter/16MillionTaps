@@ -4,7 +4,7 @@ import '../common/strings.dart' as strings;
 import '../utils/color_utils.dart' as color_utils;
 
 /// The overflow-menu actions on the tap screen's app bar.
-enum TapsMenuAction { settings, copyColor, rate, help }
+enum TapsMenuAction { settings, copyColor, share, rate, help }
 
 /// The tap screen's color-matched app bar: visible step-back and info buttons plus an overflow menu.
 class TapsAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -55,6 +55,10 @@ class TapsAppBar extends StatelessWidget implements PreferredSizeWidget {
             PopupMenuItem<TapsMenuAction>(
               value: TapsMenuAction.copyColor,
               child: Text(strings.copyColorAction),
+            ),
+            PopupMenuItem<TapsMenuAction>(
+              value: TapsMenuAction.share,
+              child: Text(strings.shareJourneyAction),
             ),
             PopupMenuItem<TapsMenuAction>(
               value: TapsMenuAction.rate,

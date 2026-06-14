@@ -5,9 +5,11 @@ import 'package:go_router/go_router.dart';
 import '../common/constants.dart';
 import '../common/strings.dart' as strings;
 import '../services/color_name_service.dart';
+import '../services/share_service.dart';
 import '../services/url_launcher.dart';
 import '../state/taps_controller.dart';
 import '../utils/color_utils.dart' as color_utils;
+import '../utils/counter_formatter.dart';
 import '../widgets/counter_display.dart';
 import '../widgets/progress_hairline.dart';
 import '../widgets/taps_app_bar.dart';
@@ -67,12 +69,32 @@ class _TapsScreenState extends State<TapsScreen> {
     _showMessage(strings.copiedColor(text));
   }
 
+  void _shareJourney() {
+    final controller = widget.controller;
+    final count = controller.count;
+    final countText = formatCount(
+      count,
+      controller.numeralSystem,
+      formatDecimal: MaterialLocalizations.of(context).formatDecimal,
+    );
+    shareJourney(
+      context,
+      count: count,
+      countText: countText,
+      fill: controller.fillColor,
+      contrast: controller.contrastColor,
+      colorName: widget.colorNames.nameFor(count),
+    );
+  }
+
   void _onMenuAction(TapsMenuAction action) {
     switch (action) {
       case TapsMenuAction.settings:
         context.push(settingsRoute);
       case TapsMenuAction.copyColor:
         _copyColor();
+      case TapsMenuAction.share:
+        _shareJourney();
       case TapsMenuAction.rate:
         openExternalUrl(context, rateUrl);
       case TapsMenuAction.help:

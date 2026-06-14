@@ -109,6 +109,15 @@ void main() {
     expect(find.text(strings.copiedColor('#000001')), findsOneWidget);
   });
 
+  testWidgets('the overflow menu offers Share journey', (tester) async {
+    await pumpScreen(tester, FakeSettingsStore(count: 42));
+
+    await tester.tap(find.byIcon(Icons.more_vert));
+    await tester.pumpAndSettle();
+
+    expect(find.text(strings.shareJourneyAction), findsOneWidget);
+  });
+
   testWidgets('hides the progress hairline by default', (tester) async {
     await pumpScreen(tester, FakeSettingsStore());
     expect(find.byType(ProgressHairline), findsNothing);

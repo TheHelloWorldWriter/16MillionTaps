@@ -12,6 +12,9 @@ const String colorNamesAsset = 'assets/color_names.json';
 const String helpUrl = 'https://www.thehelloworldwriter.com/16milliontaps/';
 const String rateUrl = 'https://www.thehelloworldwriter.com/16milliontaps/rate/';
 
+/// The app's public home, embedded in the shared journey image and its caption.
+const String appUrl = 'https://16milliontaps.thehww.app/';
+
 // Shared preferences keys.
 const String prefCountKey = 'count';
 const String prefNumeralSystemKey = 'numeral_system';

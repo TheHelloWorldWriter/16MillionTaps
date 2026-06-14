@@ -27,10 +27,23 @@ String cannotOpenUrl(String url) => 'Cannot open $url';
 
 const String goBackAction = 'Go back';
 const String copyColorAction = 'Copy color';
+const String shareJourneyAction = 'Share journey';
 const String settingsAction = 'Settings';
 const String rateAction = 'Rate app';
 const String helpAction = 'Help';
 const String infoAction = 'Info';
+
+// -------------------------------------------------------------------------------
+// Share journey
+// -------------------------------------------------------------------------------
+
+/// Caption shared with the image: the hex (and name, when known), then the app and its link.
+String shareJourneyCaption({required String hex, String? name, required String url}) {
+  final color = name == null ? hex : '$hex "$name"';
+  return "I'm at $color on my color journey. $appName - $url";
+}
+
+const String shareFailed = 'Could not share the image.';
 
 // -------------------------------------------------------------------------------
 // Settings screen
