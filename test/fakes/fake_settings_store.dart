@@ -1,3 +1,9 @@
+// Copyright (c) 2014-2026 The Hello World Writer
+//
+// Use of this source code is governed by an MIT-style
+// license that can be found in the LICENSE file or at
+// https://www.thehelloworldwriter.com/16milliontaps/license/.
+
 import 'package:sixteen_million_taps/services/settings_repository.dart';
 
 /// An in-memory [SettingsStore] for tests.

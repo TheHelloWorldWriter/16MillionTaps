@@ -1,6 +1,12 @@
+// Copyright (c) 2014-2026 The Hello World Writer
+//
+// Use of this source code is governed by an MIT-style
+// license that can be found in the LICENSE file or at
+// https://www.thehelloworldwriter.com/16milliontaps/license/.
+
+import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_web_plugins/url_strategy.dart';
 
 import 'app.dart';
 import 'services/color_name_service.dart';

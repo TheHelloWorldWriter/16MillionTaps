@@ -1,6 +1,13 @@
+// Copyright (c) 2014-2026 The Hello World Writer
+//
+// Use of this source code is governed by an MIT-style
+// license that can be found in the LICENSE file or at
+// https://www.thehelloworldwriter.com/16milliontaps/license/.
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
+
 import 'package:sixteen_million_taps/app.dart';
 import 'package:sixteen_million_taps/common/strings.dart' as strings;
 import 'package:sixteen_million_taps/services/color_name_service.dart';

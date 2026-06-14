@@ -1,8 +1,14 @@
+// Copyright (c) 2014-2026 The Hello World Writer
+//
+// Use of this source code is governed by an MIT-style
+// license that can be found in the LICENSE file or at
+// https://www.thehelloworldwriter.com/16milliontaps/license/.
+
 import 'dart:typed_data';
 import 'dart:ui' as ui;
-
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter/material.dart';
+
 import 'package:sixteen_million_taps/utils/share_image.dart';
 
 void main() {

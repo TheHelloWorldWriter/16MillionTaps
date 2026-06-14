@@ -1,4 +1,11 @@
+// Copyright (c) 2014-2026 The Hello World Writer
+//
+// Use of this source code is governed by an MIT-style
+// license that can be found in the LICENSE file or at
+// https://www.thehelloworldwriter.com/16milliontaps/license/.
+
 import 'package:flutter/material.dart';
+
 import 'package:go_router/go_router.dart';
 
 import '../common/constants.dart';

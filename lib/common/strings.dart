@@ -1,3 +1,9 @@
+// Copyright (c) 2014-2026 The Hello World Writer
+//
+// Use of this source code is governed by an MIT-style
+// license that can be found in the LICENSE file or at
+// https://www.thehelloworldwriter.com/16milliontaps/license/.
+
 /// All user-visible copy, kept in one place as the seam for future localization. Import as `strings` and reference members by prefix.
 library;
 
