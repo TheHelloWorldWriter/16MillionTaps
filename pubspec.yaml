@@ -40,6 +40,7 @@ dependencies:
   go_router: ^17.3.0
   shared_preferences: ^2.5.5
   url_launcher: ^6.3.2
+  audioplayers: ^6.7.1
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +68,7 @@ flutter:
 
   assets:
     - assets/color_names.json
+    - assets/sounds/
 
   # To add assets to your application, add an assets section, like this:
   # assets:

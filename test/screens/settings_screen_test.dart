@@ -4,6 +4,7 @@ import 'package:sixteen_million_taps/app.dart';
 import 'package:sixteen_million_taps/common/strings.dart' as strings;
 import 'package:sixteen_million_taps/screens/settings_screen.dart';
 import 'package:sixteen_million_taps/services/color_name_service.dart';
+import 'package:sixteen_million_taps/services/tap_sound_player.dart';
 import 'package:sixteen_million_taps/state/taps_controller.dart';
 import 'package:sixteen_million_taps/utils/counter_formatter.dart';
 
@@ -110,6 +111,18 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(controller.showProgressHairline, isTrue);
+  });
+
+  testWidgets('choosing a tap sound updates the controller', (tester) async {
+    final controller = await pumpSettings(tester, FakeSettingsStore());
+    expect(controller.tapSound, TapSound.none);
+
+    await tester.tap(find.text(strings.tapSoundTitle));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(strings.tapSoundChimeLabel).last);
+    await tester.pumpAndSettle();
+
+    expect(controller.tapSound, TapSound.chime);
   });
 
   testWidgets('reset clears the count and time and returns to the Taps screen', (tester) async {

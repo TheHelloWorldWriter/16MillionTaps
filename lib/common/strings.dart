@@ -56,6 +56,15 @@ const String progressIndicatorTitle = 'Progress indicator';
 const String progressIndicatorSubtitle =
     'A faint line showing your place on the journey from black to white';
 
+const String tapSoundTitle = 'Tap sound';
+const String tapSoundNoneLabel = 'None';
+const String tapSoundTingLabel = 'Ting';
+const String tapSoundBloopLabel = 'Bloop';
+const String tapSoundPluckLabel = 'Pluck';
+const String tapSoundDropLabel = 'Drop';
+const String tapSoundChimeLabel = 'Chime';
+const String tapSoundBlockLabel = 'Block';
+
 const String cheatModeTitle = 'Cheat mode';
 const String cheatModeDialogTitle = 'Jump to a number';
 const String cheatModeDialogBody =

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../common/constants.dart';
 import '../services/settings_repository.dart';
+import '../services/tap_sound_player.dart';
 import '../utils/color_utils.dart' as color_utils;
 import '../utils/counter_formatter.dart';
 
@@ -19,17 +20,20 @@ enum CounterTextSize {
 
 /// Holds the tap count and its derived color, the display settings, and the foreground time. Persists the count and time when the app leaves the foreground, and each setting as it changes.
 class TapsController extends ChangeNotifier with WidgetsBindingObserver {
-  TapsController(this._store) {
+  TapsController(this._store, {this._soundPlayer = const SilentTapSoundPlayer()}) {
     _count = _store.count.clamp(minCount, maxCount);
     _totalTapSeconds = _store.totalTapSeconds;
     _numeralSystem = _numeralSystemFromRadix(_store.numeralSystemRadix);
     _counterTextSize = _counterTextSizeFromName(_store.counterTextSizeName);
     _showProgressHairline = _store.showProgressHairline ?? false;
+    _tapSound = _tapSoundFromName(_store.tapSoundName);
+    _soundPlayer.setSound(_tapSound);
     _stopwatch.start();
     WidgetsBinding.instance.addObserver(this);
   }
 
   final SettingsStore _store;
+  final TapSoundPlayer _soundPlayer;
   final Stopwatch _stopwatch = Stopwatch();
 
   late int _count;
@@ -37,12 +41,14 @@ class TapsController extends ChangeNotifier with WidgetsBindingObserver {
   late NumeralSystem _numeralSystem;
   late CounterTextSize _counterTextSize;
   late bool _showProgressHairline;
+  late TapSound _tapSound;
 
   int get count => _count;
   NumeralSystem get numeralSystem => _numeralSystem;
   CounterTextSize get counterTextSize => _counterTextSize;
   double get counterFontSize => _counterTextSize.fontSize;
   bool get showProgressHairline => _showProgressHairline;
+  TapSound get tapSound => _tapSound;
 
   Color get fillColor => color_utils.colorForCount(_count);
   Color get contrastColor => color_utils.contrastColor(fillColor);
@@ -59,6 +65,7 @@ class TapsController extends ChangeNotifier with WidgetsBindingObserver {
 
   void increment() {
     if (atEnd) return;
+    _soundPlayer.play();
     _setCount(_count + 1);
   }
 
@@ -103,6 +110,17 @@ class TapsController extends ChangeNotifier with WidgetsBindingObserver {
     _store.setShowProgressHairline(value);
   }
 
+  set tapSound(TapSound value) {
+    if (value == _tapSound) return;
+    _tapSound = value;
+    _soundPlayer.setSound(value);
+    notifyListeners();
+    _store.setTapSoundName(value.name);
+  }
+
+  /// Plays the current tap sound once, for previewing a choice in Settings.
+  void previewTapSound() => _soundPlayer.play();
+
   void _setCount(int value) {
     _count = value;
     notifyListeners();
@@ -135,6 +153,7 @@ class TapsController extends ChangeNotifier with WidgetsBindingObserver {
     WidgetsBinding.instance.removeObserver(this);
     _foldElapsedTime();
     _saveCountAndTime();
+    _soundPlayer.dispose();
     super.dispose();
   }
 }
@@ -150,5 +169,12 @@ CounterTextSize _counterTextSizeFromName(String? name) {
   return CounterTextSize.values.firstWhere(
     (size) => size.name == name,
     orElse: () => CounterTextSize.medium,
+  );
+}
+
+TapSound _tapSoundFromName(String? name) {
+  return TapSound.values.firstWhere(
+    (sound) => sound.name == name,
+    orElse: () => TapSound.none,
   );
 }

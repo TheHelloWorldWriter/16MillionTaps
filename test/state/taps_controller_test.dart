@@ -1,8 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:sixteen_million_taps/services/tap_sound_player.dart';
 import 'package:sixteen_million_taps/state/taps_controller.dart';
 import 'package:sixteen_million_taps/utils/counter_formatter.dart';
 
 import '../fakes/fake_settings_store.dart';
+import '../fakes/fake_tap_sound_player.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -79,5 +81,37 @@ void main() {
     expect(controller.totalTapTime, Duration.zero);
     expect(store.count, 0);
     expect(store.totalTapSeconds, 0);
+  });
+
+  test('defaults the tap sound to none', () {
+    final controller = TapsController(FakeSettingsStore());
+    addTearDown(controller.dispose);
+    expect(controller.tapSound, TapSound.none);
+  });
+
+  test('plays the tap sound on increment when one is selected', () {
+    final player = FakeTapSoundPlayer();
+    final controller = TapsController(
+      FakeSettingsStore(tapSoundName: 'ting'),
+      soundPlayer: player,
+    );
+    addTearDown(controller.dispose);
+
+    expect(controller.tapSound, TapSound.ting);
+    controller.increment();
+    expect(player.playCount, 1);
+  });
+
+  test('changing the tap sound loads it and persists', () {
+    final store = FakeSettingsStore();
+    final player = FakeTapSoundPlayer();
+    final controller = TapsController(store, soundPlayer: player);
+    addTearDown(controller.dispose);
+
+    controller.tapSound = TapSound.chime;
+
+    expect(controller.tapSound, TapSound.chime);
+    expect(player.lastSound, TapSound.chime);
+    expect(store.tapSoundName, 'chime');
   });
 }

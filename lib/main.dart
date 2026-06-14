@@ -5,6 +5,7 @@ import 'package:flutter_web_plugins/url_strategy.dart';
 import 'app.dart';
 import 'services/color_name_service.dart';
 import 'services/settings_repository.dart';
+import 'services/tap_sound_player.dart';
 import 'state/taps_controller.dart';
 
 Future<void> main() async {
@@ -16,7 +17,7 @@ Future<void> main() async {
   final repository = await SettingsRepository.create();
   runApp(
     SixteenMillionTapsApp(
-      controller: TapsController(repository),
+      controller: TapsController(repository, soundPlayer: AudioplayersTapSoundPlayer()),
       colorNames: ColorNameService(),
     ),
   );

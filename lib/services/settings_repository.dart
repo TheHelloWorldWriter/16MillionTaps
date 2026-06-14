@@ -18,6 +18,9 @@ abstract interface class SettingsStore {
 
   bool? get showProgressHairline;
   Future<void> setShowProgressHairline(bool value);
+
+  String? get tapSoundName;
+  Future<void> setTapSoundName(String name);
 }
 
 /// A [SettingsStore] backed by shared_preferences via the cached API, so reads are synchronous once [create] has completed.
@@ -35,6 +38,7 @@ class SettingsRepository implements SettingsStore {
           prefCounterTextSizeKey,
           prefTotalTapSecondsKey,
           prefShowProgressHairlineKey,
+          prefTapSoundKey,
         },
       ),
     );
@@ -67,4 +71,9 @@ class SettingsRepository implements SettingsStore {
   @override
   Future<void> setShowProgressHairline(bool value) =>
       _prefs.setBool(prefShowProgressHairlineKey, value);
+
+  @override
+  String? get tapSoundName => _prefs.getString(prefTapSoundKey);
+  @override
+  Future<void> setTapSoundName(String name) => _prefs.setString(prefTapSoundKey, name);
 }

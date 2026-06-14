@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../common/constants.dart';
 import '../common/strings.dart' as strings;
+import '../services/tap_sound_player.dart';
 import '../state/taps_controller.dart';
 import '../utils/counter_formatter.dart';
 
@@ -58,6 +59,11 @@ class SettingsScreen extends StatelessWidget {
                 value: controller.showProgressHairline,
                 onChanged: (value) => controller.showProgressHairline = value,
               ),
+              ListTile(
+                title: const Text(strings.tapSoundTitle),
+                subtitle: Text(_tapSoundLabel(controller.tapSound)),
+                onTap: () => _pickTapSound(context),
+              ),
             ],
           );
         },
@@ -85,6 +91,20 @@ class SettingsScreen extends StatelessWidget {
       _textSizeLabel,
     );
     if (selected != null) controller.counterTextSize = selected;
+  }
+
+  Future<void> _pickTapSound(BuildContext context) async {
+    final selected = await _pickOption<TapSound>(
+      context,
+      strings.tapSoundTitle,
+      TapSound.values,
+      controller.tapSound,
+      _tapSoundLabel,
+    );
+    if (selected != null) {
+      controller.tapSound = selected;
+      controller.previewTapSound();
+    }
   }
 
   Future<void> _jumpToNumber(BuildContext context) async {
@@ -222,6 +242,16 @@ String _textSizeLabel(CounterTextSize size) => switch (size) {
   CounterTextSize.small => strings.textSizeSmallLabel,
   CounterTextSize.medium => strings.textSizeMediumLabel,
   CounterTextSize.large => strings.textSizeLargeLabel,
+};
+
+String _tapSoundLabel(TapSound sound) => switch (sound) {
+  TapSound.none => strings.tapSoundNoneLabel,
+  TapSound.ting => strings.tapSoundTingLabel,
+  TapSound.bloop => strings.tapSoundBloopLabel,
+  TapSound.pluck => strings.tapSoundPluckLabel,
+  TapSound.drop => strings.tapSoundDropLabel,
+  TapSound.chime => strings.tapSoundChimeLabel,
+  TapSound.block => strings.tapSoundBlockLabel,
 };
 
 /// Shows a radio-style picker of [options] and returns the chosen one (or null).
