@@ -19,13 +19,20 @@ import 'theme/app_theme.dart';
 
 /// The root widget. Wires the router and the light/dark themes (which follow the system).
 class SixteenMillionTapsApp extends StatelessWidget {
+  /// Builds the router from [controller] and [colorNames].
   SixteenMillionTapsApp({super.key, required this.controller, required this.colorNames})
     : _router = _buildRouter(controller, colorNames);
 
+  /// Owns the count, settings, and foreground time.
   final TapsController controller;
+
+  /// Resolves color names for the screens.
   final ColorNameService colorNames;
+
+  /// The app's route configuration.
   final GoRouter _router;
 
+  /// Builds the go_router with the Taps, Info, and Settings routes.
   static GoRouter _buildRouter(TapsController controller, ColorNameService colorNames) {
     return GoRouter(
       routes: [

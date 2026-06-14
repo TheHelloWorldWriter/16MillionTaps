@@ -14,12 +14,12 @@ const double _imageSize = 1080;
 /// Line height for the (possibly multi-line) count, shared by layout and fitting.
 const double _countLineHeight = 1.2;
 
-/// Renders the full-bleed "share journey" card to a square PNG: the color fill,
-/// the count centered and scaled to fit, the color name just below it when there
-/// is one, and the app [url] near the bottom - all drawn in [contrast].
+/// Renders the full-bleed "share journey" card to a square PNG: the color fill, the count centered
+/// and scaled to fit, the color name just below it when there is one, and the app [url] near the
+/// bottom - all drawn in [contrast].
 ///
-/// [countText] is the count already formatted in the user's numeral system, so the
-/// image matches the Taps screen (including the three-line binary form).
+/// [countText] is the count already formatted in the user's numeral system, so the image matches
+/// the Taps screen (including the three-line binary form).
 Future<Uint8List> renderColorCard({
   required Color fill,
   required Color contrast,
@@ -68,8 +68,8 @@ Future<Uint8List> renderColorCard({
   return data!.buffer.asUint8List();
 }
 
-/// A painter laid out to a fixed [boxWidth] so its centered lines sit centered on
-/// the canvas when painted at the left margin.
+/// A painter laid out to a fixed [boxWidth] so its centered lines sit centered on the canvas when
+/// painted at the left margin.
 TextPainter _painter(
   String text, {
   required double fontSize,
@@ -90,8 +90,8 @@ TextPainter _painter(
   )..layout(minWidth: boxWidth, maxWidth: boxWidth);
 }
 
-/// Shrinks [fontSize] so [text] fits within both [maxWidth] and [maxHeight],
-/// never enlarging it. Measured at the same line height the count is drawn with.
+/// Shrinks [fontSize] so [text] fits within both [maxWidth] and [maxHeight], never enlarging it.
+/// Measured at the same line height the count is drawn with.
 double _fittedFontSize(String text, double fontSize, double maxWidth, double maxHeight) {
   final probe = TextPainter(
     text: TextSpan(

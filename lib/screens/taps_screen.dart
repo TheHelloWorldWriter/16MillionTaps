@@ -23,15 +23,20 @@ import '../widgets/taps_app_bar.dart';
 
 /// The main screen: tap anywhere to advance the count and fill the screen with the matching color.
 class TapsScreen extends StatefulWidget {
+  /// Creates the Taps screen backed by [controller] and [colorNames].
   const TapsScreen({super.key, required this.controller, required this.colorNames});
 
+  /// Owns the count, color, and settings.
   final TapsController controller;
+
+  /// Resolves the current color's name.
   final ColorNameService colorNames;
 
   @override
   State<TapsScreen> createState() => _TapsScreenState();
 }
 
+/// Triggers the name-list load and the first-run hint after the first frame.
 class _TapsScreenState extends State<TapsScreen> {
   @override
   void initState() {
@@ -43,12 +48,14 @@ class _TapsScreenState extends State<TapsScreen> {
     });
   }
 
+  /// Shows [message] as a snackbar, replacing any current one.
   void _showMessage(String message) {
     ScaffoldMessenger.of(context)
       ..hideCurrentSnackBar()
       ..showSnackBar(SnackBar(content: Text(message)));
   }
 
+  /// Advances the count, or shows the end message once at the maximum.
   void _onTap() {
     if (widget.controller.atEnd) {
       _showMessage(strings.theEnd);
@@ -57,6 +64,7 @@ class _TapsScreenState extends State<TapsScreen> {
     widget.controller.increment();
   }
 
+  /// Steps the count back, or shows the no-going-back message at 0.
   void _onStepBack() {
     if (widget.controller.atStart) {
       _showMessage(strings.noGoingBack);
@@ -65,8 +73,10 @@ class _TapsScreenState extends State<TapsScreen> {
     widget.controller.decrement();
   }
 
+  /// Opens the Info screen.
   void _onInfo() => context.push(infoRoute);
 
+  /// Copies the current color to the clipboard - the name and hex when named, else the hex.
   void _copyColor() {
     final count = widget.controller.count;
     final hex = color_utils.hexWithHash(count);
@@ -76,6 +86,7 @@ class _TapsScreenState extends State<TapsScreen> {
     _showMessage(strings.copiedColor(text));
   }
 
+  /// Renders the current color and opens the platform share sheet.
   void _shareJourney() {
     final controller = widget.controller;
     final count = controller.count;
@@ -94,6 +105,7 @@ class _TapsScreenState extends State<TapsScreen> {
     );
   }
 
+  /// Routes an overflow-menu action to its handler.
   void _onMenuAction(TapsMenuAction action) {
     switch (action) {
       case TapsMenuAction.settings:
@@ -135,11 +147,13 @@ class _TapsScreenState extends State<TapsScreen> {
                 top: false,
                 child: Column(
                   children: [
+                    // The optional progress hairline, when enabled in Settings.
                     if (controller.showProgressHairline)
                       ProgressHairline(
                         progress: controller.progress,
                         color: controller.contrastColor,
                       ),
+                    // The counter and color name, centered in the remaining space.
                     Expanded(
                       child: Center(
                         child: CounterDisplay(

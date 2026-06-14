@@ -10,19 +10,27 @@ import 'package:flutter/services.dart' show rootBundle;
 
 import '../common/constants.dart';
 
-/// Looks up the human name for a color. Loads the bundled, sparse name list lazily on first use and notifies listeners once it is ready, so names appear without blocking startup.
+/// Looks up the human name for a color.
+///
+/// Loads the bundled, sparse name list lazily on first use and notifies listeners once it is ready,
+/// so names appear without blocking startup.
 class ColorNameService extends ChangeNotifier {
+  /// Creates an empty service that loads the bundled name list on first use.
   ColorNameService();
 
   /// Creates a pre-loaded service for tests.
   ColorNameService.withNames(Map<int, String> names) : _names = names;
 
+  /// The hex-keyed color -> name map once loaded, else null.
   Map<int, String>? _names;
+
+  /// The in-flight load, kept so [ensureLoaded] runs the work at most once.
   Future<void>? _loading;
 
   /// Loads the name list once; safe to call repeatedly.
   Future<void> ensureLoaded() => _loading ??= _load();
 
+  /// Reads and parses the bundled asset into [_names], then notifies listeners.
   Future<void> _load() async {
     if (_names != null) return;
     final raw = await rootBundle.loadString(colorNamesAsset);

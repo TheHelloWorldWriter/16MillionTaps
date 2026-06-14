@@ -14,12 +14,16 @@ import '../services/tap_sound_player.dart';
 import '../state/taps_controller.dart';
 import '../utils/counter_formatter.dart';
 
+/// The Settings app-bar overflow actions.
 enum _SettingsMenuAction { cheatMode, reset }
 
-/// The neutral, themed settings screen: numeral system and counter text size as rows, with cheat mode (jump-to-number) and reset tucked into the app-bar overflow menu.
+/// The neutral, themed settings screen: numeral system and counter text size as rows, with cheat
+/// mode (jump-to-number) and reset tucked into the app-bar overflow menu.
 class SettingsScreen extends StatelessWidget {
+  /// Creates the Settings screen driven by [controller].
   const SettingsScreen({super.key, required this.controller});
 
+  /// Holds and persists the settings the screen edits.
   final TapsController controller;
 
   @override
@@ -28,6 +32,7 @@ class SettingsScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text(strings.settingsTitle),
         actions: [
+          // Overflow: cheat mode and reset, kept off the main list.
           PopupMenuButton<_SettingsMenuAction>(
             onSelected: (action) => _onMenuAction(context, action),
             itemBuilder: (context) => const [
@@ -48,6 +53,7 @@ class SettingsScreen extends StatelessWidget {
         builder: (context, _) {
           return ListView(
             children: [
+              // The numeral system setting.
               ListTile(
                 title: const Text(strings.numeralSystemTitle),
                 subtitle: Text(
@@ -55,17 +61,20 @@ class SettingsScreen extends StatelessWidget {
                 ),
                 onTap: () => _pickNumeralSystem(context),
               ),
+              // The counter text size setting.
               ListTile(
                 title: const Text(strings.counterTextSizeTitle),
                 subtitle: Text(_textSizeLabel(controller.counterTextSize)),
                 onTap: () => _pickTextSize(context),
               ),
+              // The progress indicator setting.
               SwitchListTile(
                 title: const Text(strings.progressIndicatorTitle),
                 subtitle: const Text(strings.progressIndicatorSubtitle),
                 value: controller.showProgressHairline,
                 onChanged: (value) => controller.showProgressHairline = value,
               ),
+              // The tap sound setting.
               ListTile(
                 title: const Text(strings.tapSoundTitle),
                 subtitle: Text(_tapSoundLabel(controller.tapSound)),
@@ -78,6 +87,7 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
+  /// Opens the numeral-system picker and applies the choice.
   Future<void> _pickNumeralSystem(BuildContext context) async {
     final selected = await _pickOption<NumeralSystem>(
       context,
@@ -89,6 +99,7 @@ class SettingsScreen extends StatelessWidget {
     if (selected != null) controller.numeralSystem = selected;
   }
 
+  /// Opens the text-size picker and applies the choice.
   Future<void> _pickTextSize(BuildContext context) async {
     final selected = await _pickOption<CounterTextSize>(
       context,
@@ -100,6 +111,7 @@ class SettingsScreen extends StatelessWidget {
     if (selected != null) controller.counterTextSize = selected;
   }
 
+  /// Opens the tap-sound picker, applies the choice, and previews it.
   Future<void> _pickTapSound(BuildContext context) async {
     final selected = await _pickOption<TapSound>(
       context,
@@ -114,6 +126,7 @@ class SettingsScreen extends StatelessWidget {
     }
   }
 
+  /// Opens the jump-to-number dialog and, on confirm, jumps and returns to the Taps screen.
   Future<void> _jumpToNumber(BuildContext context) async {
     final value = await showDialog<int>(
       context: context,
@@ -125,6 +138,7 @@ class SettingsScreen extends StatelessWidget {
     if (context.mounted) context.go(tapsRoute);
   }
 
+  /// Routes an overflow action to its handler.
   void _onMenuAction(BuildContext context, _SettingsMenuAction action) {
     switch (action) {
       case _SettingsMenuAction.cheatMode:
@@ -134,6 +148,7 @@ class SettingsScreen extends StatelessWidget {
     }
   }
 
+  /// Confirms the destructive reset, then clears the journey and returns to the Taps screen.
   Future<void> _reset(BuildContext context) async {
     final confirmed = await showDialog<bool>(
       context: context,
@@ -146,22 +161,27 @@ class SettingsScreen extends StatelessWidget {
   }
 }
 
-/// Asks for a target count and validates it against the range, popping the chosen
-/// value (or null on cancel). Owns its text controller so it is disposed only once
-/// the dialog has fully left the tree.
+/// Asks for a target count and validates it against the range, popping the chosen value (or null on
+/// cancel). Owns its text controller so it is disposed only once the dialog fully leaves the tree.
 class _JumpToNumberDialog extends StatefulWidget {
+  /// Creates the dialog pre-filled with [initialValue].
   const _JumpToNumberDialog({required this.initialValue});
 
+  /// The count the field starts on.
   final int initialValue;
 
   @override
   State<_JumpToNumberDialog> createState() => _JumpToNumberDialogState();
 }
 
+/// Owns the field controller and validation for [_JumpToNumberDialog].
 class _JumpToNumberDialogState extends State<_JumpToNumberDialog> {
+  /// The field's controller, disposed with the state (never mid-animation).
   late final TextEditingController _field = TextEditingController(
     text: widget.initialValue.toString(),
   );
+
+  /// The current validation message, or null when the input is valid.
   String? _errorText;
 
   @override
@@ -170,6 +190,7 @@ class _JumpToNumberDialogState extends State<_JumpToNumberDialog> {
     super.dispose();
   }
 
+  /// Validates the input and pops the value, or shows an error.
   void _submit() {
     final parsed = int.tryParse(_field.text);
     if (parsed == null || parsed < minCount || parsed > maxCount) {
@@ -212,6 +233,7 @@ class _JumpToNumberDialogState extends State<_JumpToNumberDialog> {
 
 /// Confirms the destructive reset, popping true only when the user approves.
 class _ResetDialog extends StatelessWidget {
+  /// Creates the reset confirmation dialog.
   const _ResetDialog();
 
   @override
@@ -237,6 +259,7 @@ class _ResetDialog extends StatelessWidget {
   }
 }
 
+/// The display label for the numeral [system].
 String _numeralSystemLabel(NumeralSystem system) => switch (system) {
   NumeralSystem.binary => strings.numeralBinaryLabel,
   NumeralSystem.octal => strings.numeralOctalLabel,
@@ -244,6 +267,7 @@ String _numeralSystemLabel(NumeralSystem system) => switch (system) {
   NumeralSystem.hexadecimal => strings.numeralHexadecimalLabel,
 };
 
+/// The display label for the text [size] preset.
 String _textSizeLabel(CounterTextSize size) => switch (size) {
   CounterTextSize.extraSmall => strings.textSizeExtraSmallLabel,
   CounterTextSize.small => strings.textSizeSmallLabel,
@@ -251,6 +275,7 @@ String _textSizeLabel(CounterTextSize size) => switch (size) {
   CounterTextSize.large => strings.textSizeLargeLabel,
 };
 
+/// The display label for the tap [sound].
 String _tapSoundLabel(TapSound sound) => switch (sound) {
   TapSound.none => strings.tapSoundNoneLabel,
   TapSound.ting => strings.tapSoundTingLabel,

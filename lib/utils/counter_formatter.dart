@@ -6,21 +6,31 @@
 
 import 'color_utils.dart';
 
-/// The numeral system used to display the counter. [radix] is the numeric base, matching the values the original app persisted.
+/// The numeral system used to display the counter. [radix] is the numeric base, matching the values
+/// the original app persisted.
 enum NumeralSystem {
+  /// Base 2, rendered as the red/green/blue bytes on three lines.
   binary(2),
+
+  /// Base 8.
   octal(8),
+
+  /// Base 10, locale-grouped.
   decimal(10),
+
+  /// Base 16, six uppercase digits.
   hexadecimal(16);
 
   const NumeralSystem(this.radix);
 
+  /// The numeric base (2, 8, 10, or 16).
   final int radix;
 }
 
 /// Formats [count] in the given [system].
 ///
-/// Decimal grouping is locale-dependent, so the caller may pass [formatDecimal] (e.g. `MaterialLocalizations.formatDecimal`); without it, decimal is ungrouped.
+/// Decimal grouping is locale-dependent, so the caller may pass [formatDecimal]
+/// (e.g. `MaterialLocalizations.formatDecimal`); without it, decimal is ungrouped.
 String formatCount(int count, NumeralSystem system, {String Function(int count)? formatDecimal}) {
   return switch (system) {
     NumeralSystem.binary => _binary(count),

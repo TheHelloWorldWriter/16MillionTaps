@@ -8,8 +8,13 @@ import 'package:flutter/material.dart';
 
 import '../utils/counter_formatter.dart';
 
-/// The centered counter in the chosen numeral system, scaled down to fit the width so large numbers and the three-line binary form never overflow, with the color name shown subtly below when one exists. The name's line is always reserved, so landing on a named color never nudges the counter.
+/// The centered counter in the chosen numeral system.
+///
+/// Scaled down to fit the width so large numbers and the three-line binary form never overflow,
+/// with the color name shown subtly below when one exists. The name's line is always reserved, so
+/// landing on a named color never nudges the counter.
 class CounterDisplay extends StatelessWidget {
+  /// Creates the counter for [count] in [numeralSystem], drawn in [color] at [fontSize].
   const CounterDisplay({
     super.key,
     required this.count,
@@ -20,11 +25,22 @@ class CounterDisplay extends StatelessWidget {
     this.colorName,
   });
 
+  /// The current tap count.
   final int count;
+
+  /// How the count is rendered.
   final NumeralSystem numeralSystem;
+
+  /// Font size for the counter text, in logical pixels.
   final double fontSize;
+
+  /// The contrast color for the counter and name.
   final Color color;
+
+  /// Locale-aware decimal grouping (typically `MaterialLocalizations.formatDecimal`).
   final String Function(int count) formatDecimal;
+
+  /// The current color's name, or null when it has none.
   final String? colorName;
 
   @override
@@ -34,6 +50,7 @@ class CounterDisplay extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          // The counter, scaled down to fit the available width.
           FittedBox(
             fit: BoxFit.scaleDown,
             child: Text(
@@ -43,8 +60,8 @@ class CounterDisplay extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          // Keep the name line reserved even when the color is unnamed, so the
-          // counter holds its place as you tap into and out of named colors.
+          // The color name, with its line kept reserved even when unnamed so the counter holds its
+          // place as you tap into and out of named colors.
           Visibility(
             visible: colorName != null,
             maintainSize: true,

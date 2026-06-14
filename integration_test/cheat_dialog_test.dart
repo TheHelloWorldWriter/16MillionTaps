@@ -15,17 +15,16 @@ import 'package:sixteen_million_taps/state/taps_controller.dart';
 
 import '../test/fakes/fake_settings_store.dart';
 
-/// End-to-end guard for the jump-to-number ("cheat") dialog: dismissing it while
-/// the soft keyboard is still up must not crash. The original code disposed the
-/// dialog's text controller during the route's exit animation, which threw a
-/// framework assertion - reliably so with the keyboard open. Runs on a device so
-/// the real platform keyboard takes part, which a widget test cannot reproduce.
+/// End-to-end guard for the jump-to-number ("cheat") dialog: dismissing it while the soft keyboard
+/// is still up must not crash. The original code disposed the dialog's text controller during the
+/// route's exit animation, which threw a framework assertion - reliably so with the keyboard open.
+/// Runs on a device so the real platform keyboard takes part, which a widget test cannot reproduce.
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  // Drives the real app to the open cheat dialog. The dialog's TextField
-  // autofocuses, so once the test's fake text input is unregistered the real
-  // platform keyboard rises - matching the reported repro on dismiss.
+  // Drives the real app to the open cheat dialog. The dialog's TextField autofocuses, so once the
+  // test's fake text input is unregistered the real platform keyboard rises - matching the reported
+  // repro on dismiss.
   Future<TapsController> openCheatDialogWithKeyboard(WidgetTester tester) async {
     final controller = TapsController(FakeSettingsStore(count: 100));
     addTearDown(controller.dispose);

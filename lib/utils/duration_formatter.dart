@@ -6,7 +6,8 @@
 
 import '../common/strings.dart' as strings;
 
-/// A human-readable duration listing only the non-zero days/hours/minutes/seconds (e.g. "2 hours 13 minutes"). Zero is shown as "0 seconds".
+/// A human-readable duration listing only the non-zero days/hours/minutes/seconds (e.g. "2 hours
+/// 13 minutes"). Zero is shown as "0 seconds".
 String formatDuration(Duration duration) {
   if (duration.inSeconds <= 0) return strings.durationSeconds(0);
 

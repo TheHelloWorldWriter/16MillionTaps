@@ -12,8 +12,10 @@ import '../utils/color_utils.dart' as color_utils;
 /// The overflow-menu actions on the tap screen's app bar.
 enum TapsMenuAction { settings, copyColor, share, rate, help }
 
-/// The tap screen's color-matched app bar: visible step-back and info buttons plus an overflow menu.
+/// The tap screen's color-matched app bar: visible step-back and info icons plus an overflow menu.
 class TapsAppBar extends StatelessWidget implements PreferredSizeWidget {
+  /// Creates the app bar tinted with [backgroundColor]/[foregroundColor] and wired to the given
+  /// action callbacks.
   const TapsAppBar({
     super.key,
     required this.backgroundColor,
@@ -23,10 +25,19 @@ class TapsAppBar extends StatelessWidget implements PreferredSizeWidget {
     required this.onMenuAction,
   });
 
+  /// The current fill color, used as the bar background.
   final Color backgroundColor;
+
+  /// The contrast color for the bar's icons and text.
   final Color foregroundColor;
+
+  /// Called when the step-back action is tapped.
   final VoidCallback onStepBack;
+
+  /// Called when the info action is tapped.
   final VoidCallback onInfo;
+
+  /// Called with the chosen overflow-menu action.
   final void Function(TapsMenuAction action) onMenuAction;
 
   @override
@@ -41,6 +52,7 @@ class TapsAppBar extends StatelessWidget implements PreferredSizeWidget {
       scrolledUnderElevation: 0,
       systemOverlayStyle: color_utils.systemOverlayStyleFor(foregroundColor),
       actions: [
+        // Visible actions: step back and info.
         IconButton(
           icon: const Icon(Icons.undo),
           tooltip: strings.goBackAction,
@@ -51,6 +63,7 @@ class TapsAppBar extends StatelessWidget implements PreferredSizeWidget {
           tooltip: strings.infoAction,
           onPressed: onInfo,
         ),
+        // Overflow menu: settings, copy color, share, rate, help.
         PopupMenuButton<TapsMenuAction>(
           onSelected: onMenuAction,
           itemBuilder: (context) => const <PopupMenuEntry<TapsMenuAction>>[

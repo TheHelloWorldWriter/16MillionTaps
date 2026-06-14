@@ -4,17 +4,20 @@
 // license that can be found in the LICENSE file or at
 // https://www.thehelloworldwriter.com/16milliontaps/license/.
 
-/// Non-translatable app constants: the counter range, external links, storage keys, and route paths. User-visible copy lives in `strings.dart`.
+/// Non-translatable app constants: the counter range, external links, storage keys, and route
+/// paths. User-visible copy lives in `strings.dart`.
 library;
 
-/// The counter range. Each value maps directly to a 24-bit RGB color, from black (0) to white (0xFFFFFF).
+/// The counter range. Each value maps directly to a 24-bit RGB color, from black (0) to white
+/// (0xFFFFFF).
 const int minCount = 0x000000;
 const int maxCount = 0xFFFFFF;
 
 /// The bundled color-name dataset (a hex -> name map).
 const String colorNamesAsset = 'assets/color_names.json';
 
-// External links opened from the app bar. Rate points at a brand-page redirect that will fan out to store listings once they exist.
+// External links opened from the app bar. Rate points at a brand-page redirect that will fan out to
+// store listings once they exist.
 const String helpUrl = 'https://www.thehelloworldwriter.com/16milliontaps/';
 const String rateUrl = 'https://www.thehelloworldwriter.com/16milliontaps/rate/';
 

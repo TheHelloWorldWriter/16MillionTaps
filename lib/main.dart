@@ -14,6 +14,7 @@ import 'services/settings_repository.dart';
 import 'services/tap_sound_player.dart';
 import 'state/taps_controller.dart';
 
+/// App entry point: configures web URLs and the system UI, loads settings, then runs the app.
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // Clean web URLs without a leading '#'; a no-op on other platforms.

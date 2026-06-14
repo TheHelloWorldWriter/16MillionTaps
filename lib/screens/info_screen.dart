@@ -15,9 +15,13 @@ import '../utils/duration_formatter.dart' as duration_formatter;
 
 /// The Info screen: filled with the current color, listing its stats and codes, each copyable.
 class InfoScreen extends StatelessWidget {
+  /// Creates the Info screen for [controller] and [colorNames].
   const InfoScreen({super.key, required this.controller, required this.colorNames});
 
+  /// Source of the count, color, and derived stats.
   final TapsController controller;
+
+  /// Resolves the current color's name.
   final ColorNameService colorNames;
 
   @override
@@ -29,6 +33,7 @@ class InfoScreen extends StatelessWidget {
         final onColor = controller.contrastColor;
         final formatDecimal = MaterialLocalizations.of(context).formatDecimal;
 
+        // The labelled, copyable stat rows, in display order.
         final rows = <(String, String)>[
           (strings.infoCount, formatDecimal(controller.count)),
           (strings.infoRemaining, formatDecimal(controller.remaining)),
@@ -70,12 +75,19 @@ class InfoScreen extends StatelessWidget {
 
 /// A row showing a value over its label, with a button that copies the value.
 class _InfoRow extends StatelessWidget {
+  /// Creates a row showing [value] over [label], drawn in [color].
   const _InfoRow({required this.label, required this.value, required this.color});
 
+  /// The caption shown beneath the value.
   final String label;
+
+  /// The value shown and copied.
   final String value;
+
+  /// The contrast color for the text and copy icon.
   final Color color;
 
+  /// Copies [value] to the clipboard and confirms with a snackbar.
   void _copy(BuildContext context) {
     Clipboard.setData(ClipboardData(text: value));
     ScaffoldMessenger.of(context)

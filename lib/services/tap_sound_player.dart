@@ -6,36 +6,56 @@
 
 import 'package:flutter_soloud/flutter_soloud.dart';
 
-/// A selectable per-tap sound. [asset] is the bundled file under `assets/sounds/`, or null for [none] (silent).
+/// A selectable per-tap sound. [asset] is the bundled file under `assets/sounds/`, or null for
+/// [none] (silent).
 enum TapSound {
+  /// No sound; the default.
   none(null),
+
+  /// A bright "ting".
   ting('ting.ogg'),
+
+  /// A soft "bloop".
   bloop('bloop.ogg'),
+
+  /// A plucked note.
   pluck('pluck.ogg'),
+
+  /// A short "drop".
   drop('drop.ogg'),
+
+  /// A gentle chime.
   chime('chime.ogg'),
+
+  /// A wooden "block".
   block('block.ogg');
 
   const TapSound(this.asset);
 
+  /// The bundled file under `assets/sounds/`, or null for [none].
   final String? asset;
 
+  /// Whether this sound plays nothing.
   bool get isSilent => asset == null;
 }
 
-/// Plays the per-tap sound. An interface so the controller can run silently in tests and where audio is unavailable.
+/// Plays the per-tap sound.
+///
+/// An interface so the controller can run silently in tests and where audio is unavailable.
 abstract interface class TapSoundPlayer {
   /// Loads [sound] so the next [play] is instant; [TapSound.none] stays silent.
   void setSound(TapSound sound);
 
-  /// Plays the loaded sound. Fast taps mix as overlapping voices rather than cutting each other off.
+  /// Plays the loaded sound. Fast taps mix as overlapping voices instead of cutting each other off.
   void play();
 
+  /// Releases the audio engine and any loaded sound.
   void dispose();
 }
 
 /// A no-op player. The controller's default, so tests and audio-less contexts make no sound.
 class SilentTapSoundPlayer implements TapSoundPlayer {
+  /// Creates the silent player.
   const SilentTapSoundPlayer();
 
   @override
@@ -48,17 +68,24 @@ class SilentTapSoundPlayer implements TapSoundPlayer {
   void dispose() {}
 }
 
-/// A [TapSoundPlayer] backed by the SoLoud engine. Each tap plays a fresh, low-latency voice that mixes with any still-sounding ones, so rapid taps stay in rhythm without the crackle or drop-outs of restarting a single clip player.
+/// A [TapSoundPlayer] backed by the SoLoud engine.
+///
+/// Each tap plays a fresh, low-latency voice that mixes with any still-sounding ones, so rapid taps
+/// stay in rhythm without the crackle or drop-outs of restarting a single clip player.
 class SoloudTapSoundPlayer implements TapSoundPlayer {
+  /// The shared SoLoud engine instance.
   final SoLoud _soloud = SoLoud.instance;
 
+  /// The currently selected sound.
   TapSound _sound = TapSound.none;
+
+  /// The loaded source for [_sound], once ready.
   AudioSource? _source;
 
-  // Loading is async and lazily starts the engine, so [_generation] discards a
-  // slow load once the selection has moved on, and [_playWhenReady] lets a
-  // preview fire as soon as the sound is ready.
+  /// Bumped on each [setSound] so a slow async load can tell it is stale and bail.
   int _generation = 0;
+
+  /// Set when [play] is called before the source has finished loading (e.g. a preview).
   bool _playWhenReady = false;
 
   @override
@@ -74,6 +101,8 @@ class SoloudTapSoundPlayer implements TapSoundPlayer {
     }
   }
 
+  /// Lazily starts the engine and loads [assetKey], discarding the result if a newer selection
+  /// arrived in the meantime.
   Future<void> _loadSource(String assetKey, int generation) async {
     try {
       if (!_soloud.isInitialized) {
@@ -115,6 +144,7 @@ class SoloudTapSoundPlayer implements TapSoundPlayer {
     }
   }
 
+  /// Frees the current source, if any.
   void _disposeSource() {
     final source = _source;
     if (source != null) {

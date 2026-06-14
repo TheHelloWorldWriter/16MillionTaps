@@ -8,33 +8,56 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../common/constants.dart';
 
-/// Persistent storage for the counter and settings. An interface so the controller can be exercised with an in-memory fake in tests.
+/// Persistent storage for the counter and settings.
+///
+/// An interface so the controller can be exercised with an in-memory fake in tests.
 abstract interface class SettingsStore {
+  /// The persisted count.
   int get count;
+
+  /// Persists the count.
   Future<void> setCount(int value);
 
+  /// The persisted foreground seconds.
   int get totalTapSeconds;
+
+  /// Persists the foreground seconds.
   Future<void> setTotalTapSeconds(int value);
 
+  /// The persisted numeral-system radix, or null when unset.
   int? get numeralSystemRadix;
+
+  /// Persists the numeral-system radix.
   Future<void> setNumeralSystemRadix(int radix);
 
+  /// The persisted counter text-size name, or null when unset.
   String? get counterTextSizeName;
+
+  /// Persists the counter text-size name.
   Future<void> setCounterTextSizeName(String name);
 
+  /// The persisted progress-hairline visibility, or null when unset.
   bool? get showProgressHairline;
+
+  /// Persists the progress-hairline visibility.
   Future<void> setShowProgressHairline(bool value);
 
+  /// The persisted tap-sound name, or null when unset.
   String? get tapSoundName;
+
+  /// Persists the tap-sound name.
   Future<void> setTapSoundName(String name);
 }
 
-/// A [SettingsStore] backed by shared_preferences via the cached API, so reads are synchronous once [create] has completed.
+/// A [SettingsStore] backed by shared_preferences via the cached API, so reads are synchronous once
+/// [create] has completed.
 class SettingsRepository implements SettingsStore {
   SettingsRepository._(this._prefs);
 
+  /// The cached preferences, holding the allow-listed keys in memory.
   final SharedPreferencesWithCache _prefs;
 
+  /// Opens shared_preferences with the app's keys allow-listed, for synchronous reads after.
   static Future<SettingsRepository> create() async {
     final prefs = await SharedPreferencesWithCache.create(
       cacheOptions: const SharedPreferencesWithCacheOptions(

@@ -4,7 +4,8 @@
 // license that can be found in the LICENSE file or at
 // https://www.thehelloworldwriter.com/16milliontaps/license/.
 
-/// All user-visible copy, kept in one place as the seam for future localization. Import as `strings` and reference members by prefix.
+/// All user-visible copy, kept in one place as the seam for future localization. Import as
+/// `strings` and reference members by prefix.
 library;
 
 // -------------------------------------------------------------------------------
@@ -24,7 +25,10 @@ const String theEnd = 'Done. Where can one go from here?';
 /// Screen-reader label for the full-screen tap target.
 const String tapToCountSemantic = 'Tap to count';
 
+/// The Taps screen's copy confirmation, appending "copied to clipboard." to the value.
 String copiedColor(String value) => '$value copied to clipboard.';
+
+/// The snackbar shown when [url] will not open.
 String cannotOpenUrl(String url) => 'Cannot open $url';
 
 // -------------------------------------------------------------------------------
@@ -58,6 +62,8 @@ const String shareFailed = 'Could not share the image.';
 const String settingsTitle = 'Settings';
 
 const String numeralSystemTitle = 'Numeral system';
+
+/// The numeral-system row subtitle naming [systemName].
 String numeralSystemSummary(String systemName) => 'Count from 0 to 16,777,215 in $systemName';
 
 const String numeralBinaryLabel = 'Binary';
@@ -109,14 +115,25 @@ const String infoHex = 'Hex triplet';
 const String infoRgb = 'RGB';
 const String infoTimeSpent = 'Time in the app';
 const String infoNoColorName = 'No name';
+
+/// The copy-button tooltip for the [label] row.
 String infoCopyValueTooltip(String label) => 'Copy $label';
+
+/// The Info screen's copy confirmation, appending "copied to clipboard" to the value.
 String infoCopied(String value) => '$value copied to clipboard';
 
 // -------------------------------------------------------------------------------
 // Durations (Info "time spent")
 // -------------------------------------------------------------------------------
 
+/// "1 day " or "N days ", with a trailing space for joining.
 String durationDays(int n) => n == 1 ? '1 day ' : '$n days ';
+
+/// "1 hour " or "N hours ", with a trailing space for joining.
 String durationHours(int n) => n == 1 ? '1 hour ' : '$n hours ';
+
+/// "1 minute " or "N minutes ", with a trailing space for joining.
 String durationMinutes(int n) => n == 1 ? '1 minute ' : '$n minutes ';
+
+/// "1 second" or "N seconds" (no trailing space - it ends the string).
 String durationSeconds(int n) => n == 1 ? '1 second' : '$n seconds';

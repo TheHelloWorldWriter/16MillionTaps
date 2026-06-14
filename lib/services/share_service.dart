@@ -13,11 +13,11 @@ import '../common/strings.dart' as strings;
 import '../utils/color_utils.dart' as color_utils;
 import '../utils/share_image.dart';
 
-/// Renders the current color as a square card and opens the platform share sheet
-/// with it and a short caption. Shows a snackbar if sharing fails.
+/// Renders the current color as a square card and opens the platform share sheet with it and a
+/// short caption. Shows a snackbar if sharing fails.
 ///
-/// [countText] is the count already formatted in the user's numeral system, so the
-/// image matches the Taps screen.
+/// [countText] is the count already formatted in the user's numeral system, so the image matches
+/// the Taps screen.
 Future<void> shareJourney(
   BuildContext context, {
   required int count,
