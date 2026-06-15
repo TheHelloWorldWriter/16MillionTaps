@@ -108,12 +108,12 @@ class _TapsScreenState extends State<TapsScreen> {
   /// Routes an overflow-menu action to its handler.
   void _onMenuAction(TapsMenuAction action) {
     switch (action) {
-      case TapsMenuAction.settings:
-        context.push(settingsRoute);
       case TapsMenuAction.copyColor:
         _copyColor();
       case TapsMenuAction.share:
         _shareJourney();
+      case TapsMenuAction.settings:
+        context.push(settingsRoute);
       case TapsMenuAction.rate:
         openExternalUrl(context, rateUrl);
       case TapsMenuAction.help:

@@ -10,7 +10,7 @@ import '../common/strings.dart' as strings;
 import '../utils/color_utils.dart' as color_utils;
 
 /// The overflow-menu actions on the tap screen's app bar.
-enum TapsMenuAction { settings, copyColor, share, rate, help }
+enum TapsMenuAction { copyColor, share, settings, rate, help }
 
 /// The tap screen's color-matched app bar: visible step-back and info icons plus an overflow menu.
 class TapsAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -52,37 +52,50 @@ class TapsAppBar extends StatelessWidget implements PreferredSizeWidget {
       scrolledUnderElevation: 0,
       systemOverlayStyle: color_utils.systemOverlayStyleFor(foregroundColor),
       actions: [
-        // Visible actions: step back and info.
+        // The step-back action (always visible, but guarded at 0)
         IconButton(
           icon: const Icon(Icons.undo),
           tooltip: strings.goBackAction,
           onPressed: onStepBack,
         ),
+
+        // The info action (always visible)
         IconButton(
           icon: const Icon(Icons.info_outline),
           tooltip: strings.infoAction,
           onPressed: onInfo,
         ),
-        // Overflow menu: settings, copy color, share, rate, help.
+
         PopupMenuButton<TapsMenuAction>(
           onSelected: onMenuAction,
           itemBuilder: (context) => const <PopupMenuEntry<TapsMenuAction>>[
-            PopupMenuItem<TapsMenuAction>(
-              value: TapsMenuAction.settings,
-              child: Text(strings.settingsAction),
-            ),
+            // The copy color menu item
             PopupMenuItem<TapsMenuAction>(
               value: TapsMenuAction.copyColor,
               child: Text(strings.copyColorAction),
             ),
+
+            // The share journey menu item
             PopupMenuItem<TapsMenuAction>(
               value: TapsMenuAction.share,
               child: Text(strings.shareJourneyAction),
             ),
+
+            PopupMenuDivider(),
+
+            // The settings menu item
+            PopupMenuItem<TapsMenuAction>(
+              value: TapsMenuAction.settings,
+              child: Text(strings.settingsAction),
+            ),
+
+            // The rate app menu item
             PopupMenuItem<TapsMenuAction>(
               value: TapsMenuAction.rate,
               child: Text(strings.rateAction),
             ),
+
+            // The help menu item
             PopupMenuItem<TapsMenuAction>(
               value: TapsMenuAction.help,
               child: Text(strings.helpAction),
