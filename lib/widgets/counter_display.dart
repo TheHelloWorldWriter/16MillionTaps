@@ -48,14 +48,14 @@ class CounterDisplay extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(24),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: .min,
         children: [
           // The counter, scaled down to fit the available width.
           FittedBox(
-            fit: BoxFit.scaleDown,
+            fit: .scaleDown,
             child: Text(
               formatCount(count, numeralSystem, formatDecimal: formatDecimal),
-              textAlign: TextAlign.center,
+              textAlign: .center,
               style: TextStyle(color: color, fontSize: fontSize, height: 1.2),
             ),
           ),
@@ -69,9 +69,9 @@ class CounterDisplay extends StatelessWidget {
             maintainState: true,
             child: Text(
               colorName ?? ' ',
-              textAlign: TextAlign.center,
+              textAlign: .center,
               maxLines: 1,
-              overflow: TextOverflow.ellipsis,
+              overflow: .ellipsis,
               style: TextStyle(color: color.withValues(alpha: 0.7), fontSize: 16),
             ),
           ),

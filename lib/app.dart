@@ -59,7 +59,7 @@ class SixteenMillionTapsApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: lightTheme,
       darkTheme: darkTheme,
-      themeMode: ThemeMode.system,
+      themeMode: .system,
       routerConfig: _router,
     );
   }

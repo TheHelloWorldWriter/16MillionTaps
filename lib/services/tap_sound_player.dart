@@ -77,7 +77,7 @@ class SoloudTapSoundPlayer implements TapSoundPlayer {
   final SoLoud _soloud = SoLoud.instance;
 
   /// The currently selected sound.
-  TapSound _sound = TapSound.none;
+  TapSound _sound = .none;
 
   /// The loaded source for [_sound], once ready.
   AudioSource? _source;

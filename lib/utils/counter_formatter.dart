@@ -33,10 +33,10 @@ enum NumeralSystem {
 /// (e.g. `MaterialLocalizations.formatDecimal`); without it, decimal is ungrouped.
 String formatCount(int count, NumeralSystem system, {String Function(int count)? formatDecimal}) {
   return switch (system) {
-    NumeralSystem.binary => _binary(count),
-    NumeralSystem.octal => count.toRadixString(8),
-    NumeralSystem.decimal => formatDecimal?.call(count) ?? '$count',
-    NumeralSystem.hexadecimal => hex(count),
+    .binary => _binary(count),
+    .octal => count.toRadixString(8),
+    .decimal => formatDecimal?.call(count) ?? '$count',
+    .hexadecimal => hex(count),
   };
 }
 

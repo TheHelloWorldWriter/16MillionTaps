@@ -41,7 +41,7 @@ class TapsAppBar extends StatelessWidget implements PreferredSizeWidget {
   final void Function(TapsMenuAction action) onMenuAction;
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const .fromHeight(kToolbarHeight);
 
   @override
   Widget build(BuildContext context) {
@@ -71,13 +71,13 @@ class TapsAppBar extends StatelessWidget implements PreferredSizeWidget {
           itemBuilder: (context) => const <PopupMenuEntry<TapsMenuAction>>[
             // The copy color menu item
             PopupMenuItem<TapsMenuAction>(
-              value: TapsMenuAction.copyColor,
+              value: .copyColor,
               child: Text(strings.copyColorAction),
             ),
 
             // The share journey menu item
             PopupMenuItem<TapsMenuAction>(
-              value: TapsMenuAction.share,
+              value: .share,
               child: Text(strings.shareJourneyAction),
             ),
 
@@ -85,19 +85,19 @@ class TapsAppBar extends StatelessWidget implements PreferredSizeWidget {
 
             // The settings menu item
             PopupMenuItem<TapsMenuAction>(
-              value: TapsMenuAction.settings,
+              value: .settings,
               child: Text(strings.settingsAction),
             ),
 
             // The rate app menu item
             PopupMenuItem<TapsMenuAction>(
-              value: TapsMenuAction.rate,
+              value: .rate,
               child: Text(strings.rateAction),
             ),
 
             // The help menu item
             PopupMenuItem<TapsMenuAction>(
-              value: TapsMenuAction.help,
+              value: .help,
               child: Text(strings.helpAction),
             ),
           ],

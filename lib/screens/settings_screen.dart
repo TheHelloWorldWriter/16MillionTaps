@@ -37,11 +37,11 @@ class SettingsScreen extends StatelessWidget {
             onSelected: (action) => _onMenuAction(context, action),
             itemBuilder: (context) => const [
               PopupMenuItem(
-                value: _SettingsMenuAction.cheatMode,
+                value: .cheatMode,
                 child: Text(strings.cheatModeTitle),
               ),
               PopupMenuItem(
-                value: _SettingsMenuAction.reset,
+                value: .reset,
                 child: Text(strings.resetTitle),
               ),
             ],
@@ -141,9 +141,9 @@ class SettingsScreen extends StatelessWidget {
   /// Routes an overflow action to its handler.
   void _onMenuAction(BuildContext context, _SettingsMenuAction action) {
     switch (action) {
-      case _SettingsMenuAction.cheatMode:
+      case .cheatMode:
         _jumpToNumber(context);
-      case _SettingsMenuAction.reset:
+      case .reset:
         _reset(context);
     }
   }
@@ -206,15 +206,15 @@ class _JumpToNumberDialogState extends State<_JumpToNumberDialog> {
     return AlertDialog(
       title: const Text(strings.cheatModeDialogTitle),
       content: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: .min,
+        crossAxisAlignment: .start,
         children: [
           const Text(strings.cheatModeDialogBody),
           const SizedBox(height: 16),
           TextField(
             controller: _field,
             autofocus: true,
-            keyboardType: TextInputType.number,
+            keyboardType: .number,
             decoration: InputDecoration(errorText: _errorText),
             onSubmitted: (_) => _submit(),
           ),
@@ -261,29 +261,29 @@ class _ResetDialog extends StatelessWidget {
 
 /// The display label for the numeral [system].
 String _numeralSystemLabel(NumeralSystem system) => switch (system) {
-  NumeralSystem.binary => strings.numeralBinaryLabel,
-  NumeralSystem.octal => strings.numeralOctalLabel,
-  NumeralSystem.decimal => strings.numeralDecimalLabel,
-  NumeralSystem.hexadecimal => strings.numeralHexadecimalLabel,
+  .binary => strings.numeralBinaryLabel,
+  .octal => strings.numeralOctalLabel,
+  .decimal => strings.numeralDecimalLabel,
+  .hexadecimal => strings.numeralHexadecimalLabel,
 };
 
 /// The display label for the text [size] preset.
 String _textSizeLabel(CounterTextSize size) => switch (size) {
-  CounterTextSize.extraSmall => strings.textSizeExtraSmallLabel,
-  CounterTextSize.small => strings.textSizeSmallLabel,
-  CounterTextSize.medium => strings.textSizeMediumLabel,
-  CounterTextSize.large => strings.textSizeLargeLabel,
+  .extraSmall => strings.textSizeExtraSmallLabel,
+  .small => strings.textSizeSmallLabel,
+  .medium => strings.textSizeMediumLabel,
+  .large => strings.textSizeLargeLabel,
 };
 
 /// The display label for the tap [sound].
 String _tapSoundLabel(TapSound sound) => switch (sound) {
-  TapSound.none => strings.tapSoundNoneLabel,
-  TapSound.ting => strings.tapSoundTingLabel,
-  TapSound.bloop => strings.tapSoundBloopLabel,
-  TapSound.pluck => strings.tapSoundPluckLabel,
-  TapSound.drop => strings.tapSoundDropLabel,
-  TapSound.chime => strings.tapSoundChimeLabel,
-  TapSound.block => strings.tapSoundBlockLabel,
+  .none => strings.tapSoundNoneLabel,
+  .ting => strings.tapSoundTingLabel,
+  .bloop => strings.tapSoundBloopLabel,
+  .pluck => strings.tapSoundPluckLabel,
+  .drop => strings.tapSoundDropLabel,
+  .chime => strings.tapSoundChimeLabel,
+  .block => strings.tapSoundBlockLabel,
 };
 
 /// Shows a radio-style picker of [options] and returns the chosen one (or null).

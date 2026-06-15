@@ -189,7 +189,7 @@ class TapsController extends ChangeNotifier with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
+    if (state == .resumed) {
       _stopwatch.start();
     } else {
       _foldElapsedTime();
@@ -223,24 +223,24 @@ class TapsController extends ChangeNotifier with WidgetsBindingObserver {
 
 /// The numeral system for [radix], or decimal when unknown.
 NumeralSystem _numeralSystemFromRadix(int? radix) {
-  return NumeralSystem.values.firstWhere(
+  return .values.firstWhere(
     (system) => system.radix == radix,
-    orElse: () => NumeralSystem.decimal,
+    orElse: () => .decimal,
   );
 }
 
 /// The text-size preset named [name], or medium when unknown.
 CounterTextSize _counterTextSizeFromName(String? name) {
-  return CounterTextSize.values.firstWhere(
+  return .values.firstWhere(
     (size) => size.name == name,
-    orElse: () => CounterTextSize.medium,
+    orElse: () => .medium,
   );
 }
 
 /// The tap sound named [name], or none when unknown.
 TapSound _tapSoundFromName(String? name) {
-  return TapSound.values.firstWhere(
+  return .values.firstWhere(
     (sound) => sound.name == name,
-    orElse: () => TapSound.none,
+    orElse: () => .none,
   );
 }

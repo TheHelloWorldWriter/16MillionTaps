@@ -29,8 +29,8 @@ Future<Uint8List> renderColorCard({
   double size = _imageSize,
 }) async {
   final recorder = ui.PictureRecorder();
-  final canvas = Canvas(recorder, Rect.fromLTWH(0, 0, size, size));
-  canvas.drawRect(Rect.fromLTWH(0, 0, size, size), Paint()..color = fill);
+  final canvas = Canvas(recorder, .fromLTWH(0, 0, size, size));
+  canvas.drawRect(.fromLTWH(0, 0, size, size), Paint()..color = fill);
 
   final margin = size * 0.08;
   final boxWidth = size - margin * 2;
@@ -62,7 +62,7 @@ Future<Uint8List> renderColorCard({
 
   final picture = recorder.endRecording();
   final image = await picture.toImage(size.round(), size.round());
-  final data = await image.toByteData(format: ui.ImageByteFormat.png);
+  final data = await image.toByteData(format: .png);
   image.dispose();
   picture.dispose();
   return data!.buffer.asUint8List();
@@ -83,8 +83,8 @@ TextPainter _painter(
       text: text,
       style: TextStyle(color: color, fontSize: fontSize, height: height),
     ),
-    textAlign: TextAlign.center,
-    textDirection: TextDirection.ltr,
+    textAlign: .center,
+    textDirection: .ltr,
     maxLines: maxLines,
     ellipsis: maxLines == null ? null : '…',
   )..layout(minWidth: boxWidth, maxWidth: boxWidth);
@@ -98,8 +98,8 @@ double _fittedFontSize(String text, double fontSize, double maxWidth, double max
       text: text,
       style: TextStyle(fontSize: fontSize, height: _countLineHeight),
     ),
-    textAlign: TextAlign.center,
-    textDirection: TextDirection.ltr,
+    textAlign: .center,
+    textDirection: .ltr,
   )..layout();
   final widthScale = probe.width > maxWidth ? maxWidth / probe.width : 1.0;
   final heightScale = probe.height > maxHeight ? maxHeight / probe.height : 1.0;

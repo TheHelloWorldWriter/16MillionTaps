@@ -91,7 +91,7 @@ class _InfoSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: .start,
       children: [
         Padding(
           padding: const EdgeInsets.fromLTRB(16, 20, 16, 4),
@@ -100,7 +100,7 @@ class _InfoSection extends StatelessWidget {
             style: TextStyle(
               color: color.withValues(alpha: 0.6),
               fontSize: 12,
-              fontWeight: FontWeight.w600,
+              fontWeight: .w600,
               letterSpacing: 1.2,
             ),
           ),
@@ -141,7 +141,7 @@ class _InfoRow extends StatelessWidget {
     return ListTile(
       title: Text(
         value,
-        style: TextStyle(color: color, fontWeight: FontWeight.w500),
+        style: TextStyle(color: color, fontWeight: .w500),
       ),
       subtitle: Text(label, style: TextStyle(color: color.withValues(alpha: 0.7))),
       trailing: IconButton(

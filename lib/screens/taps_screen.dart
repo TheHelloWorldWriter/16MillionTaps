@@ -101,15 +101,15 @@ class _TapsScreenState extends State<TapsScreen> {
   /// Routes an overflow-menu action to its handler.
   void _onMenuAction(TapsMenuAction action) {
     switch (action) {
-      case TapsMenuAction.copyColor:
+      case .copyColor:
         _copyColor();
-      case TapsMenuAction.share:
+      case .share:
         _shareJourney();
-      case TapsMenuAction.settings:
+      case .settings:
         context.push(settingsRoute);
-      case TapsMenuAction.rate:
+      case .rate:
         openExternalUrl(context, rateUrl);
-      case TapsMenuAction.help:
+      case .help:
         openExternalUrl(context, helpUrl);
     }
   }
@@ -140,7 +140,7 @@ class _TapsScreenState extends State<TapsScreen> {
             button: true,
             label: strings.tapToCountSemantic,
             child: GestureDetector(
-              behavior: HitTestBehavior.opaque,
+              behavior: .opaque,
               onTap: _onTap,
               child: SafeArea(
                 top: false,
@@ -210,7 +210,7 @@ class _EndpointHint extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(32, 0, 32, 24),
       child: Text(
         message,
-        textAlign: TextAlign.center,
+        textAlign: .center,
         style: TextStyle(color: color.withValues(alpha: 0.7), fontSize: 15),
       ),
     );

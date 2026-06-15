@@ -20,7 +20,7 @@ Future<void> main() async {
   // Clean web URLs without a leading '#'; a no-op on other platforms.
   usePathUrlStrategy();
   // Draw the color behind the system bars so they match the fill (Android).
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+  SystemChrome.setEnabledSystemUIMode(.edgeToEdge);
   final repository = await SettingsRepository.create();
   runApp(
     SixteenMillionTapsApp(

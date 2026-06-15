@@ -30,12 +30,12 @@ final PageTransitionsTheme _pageTransitionsTheme = PageTransitionsTheme(
 
 /// Light theme for the neutral surfaces; the color-filled screens ignore it.
 final ThemeData lightTheme = ThemeData(
-  colorScheme: ColorScheme.fromSeed(seedColor: _seedColor, brightness: Brightness.light),
+  colorScheme: .fromSeed(seedColor: _seedColor, brightness: .light),
   pageTransitionsTheme: _pageTransitionsTheme,
 );
 
 /// Dark theme for the neutral surfaces; the color-filled screens ignore it.
 final ThemeData darkTheme = ThemeData(
-  colorScheme: ColorScheme.fromSeed(seedColor: _seedColor, brightness: Brightness.dark),
+  colorScheme: .fromSeed(seedColor: _seedColor, brightness: .dark),
   pageTransitionsTheme: _pageTransitionsTheme,
 );

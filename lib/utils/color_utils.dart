@@ -28,7 +28,7 @@ SystemUiOverlayStyle systemOverlayStyleFor(Color contrastColor) {
   return SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
     statusBarIconBrightness: iconBrightness,
-    statusBarBrightness: lightIcons ? Brightness.dark : Brightness.light,
+    statusBarBrightness: lightIcons ? .dark : .light,
     systemNavigationBarColor: Colors.transparent,
     systemNavigationBarIconBrightness: iconBrightness,
     systemNavigationBarContrastEnforced: false,
