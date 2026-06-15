@@ -24,7 +24,7 @@ const Color _seedColor = Color(0xFF0000EE);
 final PageTransitionsTheme _pageTransitionsTheme = PageTransitionsTheme(
   builders: Map<TargetPlatform, PageTransitionsBuilder>.fromIterable(
     TargetPlatform.values,
-    value: (dynamic _) => ZoomPageTransitionsBuilder(backgroundColor: Colors.transparent),
+    value: (dynamic _) => const ZoomPageTransitionsBuilder(backgroundColor: Colors.transparent),
   ),
 );
 

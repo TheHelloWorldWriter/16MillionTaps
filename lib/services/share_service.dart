@@ -49,7 +49,7 @@ Future<void> shareJourney(
       ),
     );
   } catch (_) {
-    messenger.showSnackBar(SnackBar(content: Text(strings.shareFailed)));
+    messenger.showSnackBar(const SnackBar(content: Text(strings.shareFailed)));
   }
 }
 
