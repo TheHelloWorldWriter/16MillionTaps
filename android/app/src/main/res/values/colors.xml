@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Splash background; matches the app icon's background so the icon's circle blends in. -->
+    <color name="splash_background">#0E0E12</color>
+</resources>
