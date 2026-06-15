@@ -107,6 +107,8 @@ const String resetDialogBody =
 // -------------------------------------------------------------------------------
 
 const String infoTitle = 'Info';
+const String infoJourneySection = 'Journey';
+const String infoColorSection = 'Color';
 const String infoCount = 'Count';
 const String infoRemaining = 'Remaining';
 const String infoCompleted = 'Completed';

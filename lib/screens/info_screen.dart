@@ -33,15 +33,19 @@ class InfoScreen extends StatelessWidget {
         final onColor = controller.contrastColor;
         final formatDecimal = MaterialLocalizations.of(context).formatDecimal;
 
-        // The labelled, copyable stat rows, in display order.
-        final rows = <(String, String)>[
+        // Journey stats: the count and how far it has come.
+        final journeyRows = <(String, String)>[
           (strings.infoCount, formatDecimal(controller.count)),
           (strings.infoRemaining, formatDecimal(controller.remaining)),
           (strings.infoCompleted, '${controller.percentComplete.toStringAsFixed(3)}%'),
+          (strings.infoTimeSpent, duration_formatter.formatDuration(controller.totalTapTime)),
+        ];
+
+        // Color codes for the current fill.
+        final colorRows = <(String, String)>[
           (strings.infoColorName, colorNames.nameFor(controller.count) ?? strings.infoNoColorName),
           (strings.infoHex, color_utils.hexWithHash(controller.count)),
           (strings.infoRgb, color_utils.rgb(controller.count)),
-          (strings.infoTimeSpent, duration_formatter.formatDuration(controller.totalTapTime)),
         ];
 
         return Scaffold(
@@ -56,19 +60,56 @@ class InfoScreen extends StatelessWidget {
           ),
           body: SafeArea(
             top: false,
-            child: ListView.separated(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              itemCount: rows.length,
-              separatorBuilder: (context, _) =>
-                  Divider(height: 1, thickness: 1, color: onColor.withValues(alpha: 0.2)),
-              itemBuilder: (context, index) {
-                final (label, value) = rows[index];
-                return _InfoRow(label: label, value: value, color: onColor);
-              },
+            child: ListView(
+              padding: const EdgeInsets.only(bottom: 8),
+              children: [
+                _InfoSection(title: strings.infoJourneySection, rows: journeyRows, color: onColor),
+                _InfoSection(title: strings.infoColorSection, rows: colorRows, color: onColor),
+              ],
             ),
           ),
         );
       },
+    );
+  }
+}
+
+/// A titled group of rows: a subtle section header over its [_InfoRow]s, divided by hairlines.
+class _InfoSection extends StatelessWidget {
+  /// Creates a section headed by [title] over its [rows], drawn in [color].
+  const _InfoSection({required this.title, required this.rows, required this.color});
+
+  /// The section header shown above the rows.
+  final String title;
+
+  /// The label/value pairs in this section, in display order.
+  final List<(String, String)> rows;
+
+  /// The contrast color for the header, rows, and dividers.
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 20, 16, 4),
+          child: Text(
+            title.toUpperCase(),
+            style: TextStyle(
+              color: color.withValues(alpha: 0.6),
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+              letterSpacing: 1.2,
+            ),
+          ),
+        ),
+        for (final (index, (label, value)) in rows.indexed) ...[
+          if (index > 0) Divider(height: 1, thickness: 1, color: color.withValues(alpha: 0.2)),
+          _InfoRow(label: label, value: value, color: color),
+        ],
+      ],
     );
   }
 }

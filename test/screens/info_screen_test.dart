@@ -7,6 +7,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:sixteen_million_taps/common/strings.dart' as strings;
 import 'package:sixteen_million_taps/screens/info_screen.dart';
 import 'package:sixteen_million_taps/services/color_name_service.dart';
 import 'package:sixteen_million_taps/state/taps_controller.dart';
@@ -37,6 +38,13 @@ void main() {
     await pumpInfo(tester, 0x000001, ColorNameService.withNames(const {}));
 
     expect(find.text('No name'), findsOneWidget);
+  });
+
+  testWidgets('groups the rows under Journey and Color section headers', (tester) async {
+    await pumpInfo(tester, 0x112358, ColorNameService.withNames(const {}));
+
+    expect(find.text(strings.infoJourneySection.toUpperCase()), findsOneWidget);
+    expect(find.text(strings.infoColorSection.toUpperCase()), findsOneWidget);
   });
 
   testWidgets('copying a value confirms with a snackbar', (tester) async {
