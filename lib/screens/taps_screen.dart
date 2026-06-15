@@ -36,7 +36,7 @@ class TapsScreen extends StatefulWidget {
   State<TapsScreen> createState() => _TapsScreenState();
 }
 
-/// Triggers the name-list load and the first-run hint after the first frame.
+/// Triggers the color-name list load after the first frame.
 class _TapsScreenState extends State<TapsScreen> {
   @override
   void initState() {
@@ -44,7 +44,6 @@ class _TapsScreenState extends State<TapsScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       widget.colorNames.ensureLoaded();
-      if (widget.controller.count == minCount) _showMessage(strings.firstTapHint);
     });
   }
 
@@ -55,14 +54,8 @@ class _TapsScreenState extends State<TapsScreen> {
       ..showSnackBar(SnackBar(content: Text(message)));
   }
 
-  /// Advances the count, or shows the end message once at the maximum.
-  void _onTap() {
-    if (widget.controller.atEnd) {
-      _showMessage(strings.theEnd);
-      return;
-    }
-    widget.controller.increment();
-  }
+  /// Advances the count; a no-op at the maximum, where the closing line stays shown.
+  void _onTap() => widget.controller.increment();
 
   /// Steps the count back, or shows the no-going-back message at 0.
   void _onStepBack() {
@@ -128,6 +121,12 @@ class _TapsScreenState extends State<TapsScreen> {
       builder: (context, _) {
         final controller = widget.controller;
         final formatDecimal = MaterialLocalizations.of(context).formatDecimal;
+        // A quiet fixed note at each end of the journey; nothing in between.
+        final endpointMessage = controller.atStart
+            ? strings.firstTapHint
+            : controller.atEnd
+            ? strings.theEnd
+            : null;
         return Scaffold(
           backgroundColor: controller.fillColor,
           appBar: TapsAppBar(
@@ -145,27 +144,43 @@ class _TapsScreenState extends State<TapsScreen> {
               onTap: _onTap,
               child: SafeArea(
                 top: false,
-                child: Column(
+                child: Stack(
                   children: [
-                    // The optional progress hairline, when enabled in Settings.
-                    if (controller.showProgressHairline)
-                      ProgressHairline(
-                        progress: controller.progress,
-                        color: controller.contrastColor,
-                      ),
-                    // The counter and color name, centered in the remaining space.
-                    Expanded(
-                      child: Center(
-                        child: CounterDisplay(
-                          count: controller.count,
-                          numeralSystem: controller.numeralSystem,
-                          fontSize: controller.counterFontSize,
+                    // Base layout: optional hairline above the centered counter. Unchanged through
+                    // the middle of the journey - the bottom note below only exists at the two ends.
+                    Column(
+                      children: [
+                        if (controller.showProgressHairline)
+                          ProgressHairline(
+                            progress: controller.progress,
+                            color: controller.contrastColor,
+                          ),
+                        Expanded(
+                          child: Center(
+                            child: CounterDisplay(
+                              count: controller.count,
+                              numeralSystem: controller.numeralSystem,
+                              fontSize: controller.counterFontSize,
+                              color: controller.contrastColor,
+                              formatDecimal: formatDecimal,
+                              colorName: widget.colorNames.nameFor(controller.count),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    // A quiet endpoint note pinned to the bottom, only at 0 or the maximum, overlaid
+                    // so the centered counter never shifts.
+                    if (endpointMessage != null)
+                      Positioned(
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        child: _EndpointHint(
+                          message: endpointMessage,
                           color: controller.contrastColor,
-                          formatDecimal: formatDecimal,
-                          colorName: widget.colorNames.nameFor(controller.count),
                         ),
                       ),
-                    ),
                   ],
                 ),
               ),
@@ -173,6 +188,31 @@ class _TapsScreenState extends State<TapsScreen> {
           ),
         );
       },
+    );
+  }
+}
+
+/// A quiet note pinned near the bottom at the ends of the journey: the start hint at 0, the closing
+/// line at the maximum. The middle of the journey shows nothing here.
+class _EndpointHint extends StatelessWidget {
+  /// Creates the endpoint note showing [message] in [color].
+  const _EndpointHint({required this.message, required this.color});
+
+  /// The start hint or the closing line.
+  final String message;
+
+  /// The contrast color for the text.
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(32, 0, 32, 24),
+      child: Text(
+        message,
+        textAlign: TextAlign.center,
+        style: TextStyle(color: color.withValues(alpha: 0.7), fontSize: 15),
+      ),
     );
   }
 }

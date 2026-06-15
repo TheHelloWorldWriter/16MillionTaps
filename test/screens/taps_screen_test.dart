@@ -7,6 +7,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:sixteen_million_taps/common/constants.dart';
 import 'package:sixteen_million_taps/common/strings.dart' as strings;
 import 'package:sixteen_million_taps/screens/taps_screen.dart';
 import 'package:sixteen_million_taps/services/color_name_service.dart';
@@ -46,6 +47,24 @@ void main() {
     expect(find.text('42'), findsOneWidget);
     expect(controller.count, 42);
     expect(controller.fillColor, isNot(before));
+  });
+
+  testWidgets('shows the persistent start hint at 0', (tester) async {
+    await pumpScreen(tester, FakeSettingsStore(count: 0));
+    expect(find.text(strings.firstTapHint), findsOneWidget);
+    expect(find.text(strings.theEnd), findsNothing);
+  });
+
+  testWidgets('shows the persistent closing line at the maximum', (tester) async {
+    await pumpScreen(tester, FakeSettingsStore(count: maxCount));
+    expect(find.text(strings.theEnd), findsOneWidget);
+    expect(find.text(strings.firstTapHint), findsNothing);
+  });
+
+  testWidgets('shows neither endpoint note in the middle', (tester) async {
+    await pumpScreen(tester, FakeSettingsStore(count: 1000));
+    expect(find.text(strings.firstTapHint), findsNothing);
+    expect(find.text(strings.theEnd), findsNothing);
   });
 
   testWidgets('resumes from the saved count, grouped in decimal', (tester) async {
