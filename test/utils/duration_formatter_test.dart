@@ -11,7 +11,7 @@ import 'package:sixteen_million_taps/utils/duration_formatter.dart';
 void main() {
   group('formatDuration', () {
     test('zero is "0 seconds"', () {
-      expect(formatDuration(Duration.zero), '0 seconds');
+      expect(formatDuration(.zero), '0 seconds');
     });
     test('lists only non-zero units', () {
       expect(formatDuration(const Duration(minutes: 4, seconds: 30)), '4 minutes 30 seconds');

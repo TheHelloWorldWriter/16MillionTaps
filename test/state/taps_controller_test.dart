@@ -27,7 +27,7 @@ void main() {
     final controller = TapsController(store);
     addTearDown(controller.dispose);
 
-    controller.numeralSystem = NumeralSystem.binary;
+    controller.numeralSystem = .binary;
 
     expect(controller.numeralSystem, NumeralSystem.binary);
     expect(store.numeralSystemRadix, 2);
@@ -38,7 +38,7 @@ void main() {
     final controller = TapsController(store);
     addTearDown(controller.dispose);
 
-    controller.counterTextSize = CounterTextSize.large;
+    controller.counterTextSize = .large;
 
     expect(store.counterTextSizeName, 'large');
   });
@@ -115,7 +115,7 @@ void main() {
     final controller = TapsController(store, soundPlayer: player);
     addTearDown(controller.dispose);
 
-    controller.tapSound = TapSound.chime;
+    controller.tapSound = .chime;
 
     expect(controller.tapSound, TapSound.chime);
     expect(player.lastSound, TapSound.chime);

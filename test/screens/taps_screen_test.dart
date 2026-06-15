@@ -28,7 +28,7 @@ void main() {
       MaterialApp(
         home: TapsScreen(
           controller: controller,
-          colorNames: colorNames ?? ColorNameService.withNames(const {}),
+          colorNames: colorNames ?? .withNames(const {}),
         ),
       ),
     );
@@ -81,7 +81,7 @@ void main() {
     await pumpScreen(
       tester,
       FakeSettingsStore(count: 0x112358),
-      colorNames: ColorNameService.withNames({0x112358: 'Fibonacci Blue'}),
+      colorNames: .withNames({0x112358: 'Fibonacci Blue'}),
     );
     expect(find.text('Fibonacci Blue'), findsOneWidget);
   });
@@ -93,7 +93,7 @@ void main() {
     await pumpScreen(
       tester,
       FakeSettingsStore(count: count),
-      colorNames: ColorNameService.withNames({count: 'Fibonacci Blue'}),
+      colorNames: .withNames({count: 'Fibonacci Blue'}),
     );
     expect(find.text('Fibonacci Blue'), findsOneWidget);
     final namedY = tester.getTopLeft(find.text(decimal)).dy;
@@ -101,7 +101,7 @@ void main() {
     await pumpScreen(
       tester,
       FakeSettingsStore(count: count),
-      colorNames: ColorNameService.withNames(const {}),
+      colorNames: .withNames(const {}),
     );
     expect(find.text('Fibonacci Blue'), findsNothing);
     final unnamedY = tester.getTopLeft(find.text(decimal)).dy;
@@ -113,7 +113,7 @@ void main() {
     await pumpScreen(
       tester,
       FakeSettingsStore(count: 0x112358),
-      colorNames: ColorNameService.withNames({0x112358: 'Fibonacci Blue'}),
+      colorNames: .withNames({0x112358: 'Fibonacci Blue'}),
     );
 
     await tester.tap(find.byIcon(Icons.more_vert));

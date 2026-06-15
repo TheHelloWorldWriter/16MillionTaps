@@ -26,7 +26,7 @@ void main() {
   }
 
   testWidgets('shows the name, hex, RGB, and count for a named color', (tester) async {
-    await pumpInfo(tester, 0x112358, ColorNameService.withNames({0x112358: 'Fibonacci Blue'}));
+    await pumpInfo(tester, 0x112358, .withNames({0x112358: 'Fibonacci Blue'}));
 
     expect(find.text('Fibonacci Blue'), findsOneWidget);
     expect(find.text('#112358'), findsOneWidget);
@@ -35,20 +35,20 @@ void main() {
   });
 
   testWidgets('shows "No name" for an unnamed color', (tester) async {
-    await pumpInfo(tester, 0x000001, ColorNameService.withNames(const {}));
+    await pumpInfo(tester, 0x000001, .withNames(const {}));
 
     expect(find.text('No name'), findsOneWidget);
   });
 
   testWidgets('groups the rows under Journey and Color section headers', (tester) async {
-    await pumpInfo(tester, 0x112358, ColorNameService.withNames(const {}));
+    await pumpInfo(tester, 0x112358, .withNames(const {}));
 
     expect(find.text(strings.infoJourneySection.toUpperCase()), findsOneWidget);
     expect(find.text(strings.infoColorSection.toUpperCase()), findsOneWidget);
   });
 
   testWidgets('copying a value confirms with a snackbar', (tester) async {
-    await pumpInfo(tester, 0x112358, ColorNameService.withNames(const {}));
+    await pumpInfo(tester, 0x112358, .withNames(const {}));
 
     await tester.tap(find.byIcon(Icons.copy).first);
     await tester.pump();

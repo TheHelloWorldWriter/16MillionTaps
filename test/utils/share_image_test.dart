@@ -33,7 +33,7 @@ void main() {
     expect(image.height, 1080);
 
     // The fill reaches the corners (full-bleed).
-    final pixels = (await image.toByteData(format: ui.ImageByteFormat.rawRgba))!;
+    final pixels = (await image.toByteData(format: .rawRgba))!;
     expect(
       [pixels.getUint8(0), pixels.getUint8(1), pixels.getUint8(2), pixels.getUint8(3)],
       [0x11, 0x23, 0x58, 0xFF],
