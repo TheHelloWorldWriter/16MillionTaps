@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 /// The opaque color whose RGB value equals [count] (0 = black, 0xFFFFFF = white).
-Color colorForCount(int count) => Color(0xFF000000 | (count & 0xFFFFFF));
+Color colorForCount(int count) => .new(0xFF000000 | (count & 0xFFFFFF));
 
 /// Black or white, whichever gives the higher WCAG contrast against [color]. Picking the better of
 /// the two keeps text on every fill at >= 4.5:1 (AA), which a fixed brightness threshold cannot

@@ -61,7 +61,7 @@ class InfoScreen extends StatelessWidget {
           body: SafeArea(
             top: false,
             child: ListView(
-              padding: const EdgeInsets.only(bottom: 8),
+              padding: const .only(bottom: 8),
               children: [
                 _InfoSection(title: strings.infoJourneySection, rows: journeyRows, color: onColor),
                 _InfoSection(title: strings.infoColorSection, rows: colorRows, color: onColor),
@@ -94,7 +94,7 @@ class _InfoSection extends StatelessWidget {
       crossAxisAlignment: .start,
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(16, 20, 16, 4),
+          padding: const .fromLTRB(16, 20, 16, 4),
           child: Text(
             title.toUpperCase(),
             style: TextStyle(

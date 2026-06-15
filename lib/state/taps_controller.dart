@@ -117,7 +117,7 @@ class TapsController extends ChangeNotifier with WidgetsBindingObserver {
   bool get atEnd => _count >= maxCount;
 
   /// Total foreground time spent tapping, including the current session.
-  Duration get totalTapTime => Duration(seconds: _totalTapSeconds + _stopwatch.elapsed.inSeconds);
+  Duration get totalTapTime => .new(seconds: _totalTapSeconds + _stopwatch.elapsed.inSeconds);
 
   /// Advances the count by one and plays the tap sound, unless already at the maximum.
   void increment() {

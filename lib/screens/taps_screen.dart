@@ -207,7 +207,7 @@ class _EndpointHint extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(32, 0, 32, 24),
+      padding: const .fromLTRB(32, 0, 32, 24),
       child: Text(
         message,
         textAlign: .center,

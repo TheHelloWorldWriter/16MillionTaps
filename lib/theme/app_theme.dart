@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 
 /// Seed for the neutral surfaces (overflow menu, Settings, dialogs) - a nod to "255 is blue",
 /// the app's signature hue. The tap and Info screens are color-filled and ignore this.
-const Color _seedColor = Color(0xFF0000EE);
+const _seedColor = Color(0xFF0000EE);
 
 /// Page transitions that paint no background behind the animating route.
 ///
