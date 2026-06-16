@@ -3,35 +3,61 @@
 [![Version badge](https://img.shields.io/github/v/tag/TheHelloWorldWriter/16MillionTaps?color=forestgreen&label=version)](https://github.com/TheHelloWorldWriter/16MillionTaps/releases)
 [![MIT License badge](https://img.shields.io/github/license/TheHelloWorldWriter/16MillionTaps?color=9c0000)](LICENSE)
 [![GitHub Code Size badge](https://img.shields.io/github/languages/code-size/TheHelloWorldWriter/16MillionTaps)](https://github.com/TheHelloWorldWriter/16MillionTaps)
-[![Contributions Welcome badge](https://img.shields.io/badge/contributions-welcome-cornflowerblue)](#Contributing)
 ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/TheHelloWorldWriter/16MillionTaps/total)
 
-16 Million Taps is an app that counts your taps on your phone or tablet. With each touch the screen is filled with a different tint of color, whose RGB color code equals the number of taps so far. 0 is Black, 255 is Blue, 65,280 is Green, and 16,777,216 is White.
+A calm, mantra-like color tap counter, for the web and Android.
 
-A tapping app seems kind of useless, doesn't it? Just try it for a few minutes, or for a few thousand taps. You might experience your mind wandering off, relaxing, and even starting multiple "background threads" to solve forgotten problems. Kind of a tapping mantra, in which the repeated word or formula is replaced with ... taps on the screen.
+Each tap fills the whole screen with a color whose RGB value equals your count so far: 0 is black, 255 is blue, 65,280 is green, and 16,777,215 is white.
 
-You can tap for a few seconds, or for an entire hour. It's completely up to you, and the next time you open the app you continue exactly where you left off. It's OK if you don't get to 16 million taps (although there are some beautiful colors in that area). As in most cases, the journey is the destination.
+A tapping app seems kind of useless, doesn't it? Try it for a few minutes, or a few thousand taps. You might notice your mind wandering off, relaxing, maybe quietly working on some forgotten problem in the background. It's a kind of mantra, with taps in place of the repeated word.
 
-You can count in decimal, like most humans do: 1, 2 ... 100 ... 1,000. You can also count in binary (like computers do), in octal, or in hexadecimal. You can also go one step back, in case you missed a psychological milestone like 100,000. And there is a cheating mode in 16 Million Taps, so you can jump to 1 million without having to tap a million times (but it's not recommended, as it actually defeats the purpose).
+Tap for a few seconds or for an hour - it's up to you, and the next time you open it you continue exactly where you left off. It's fine if you never reach 16 million (though the colors up there are beautiful). As usual, the journey is the destination.
 
-16 Million Taps measures the time you've spent "color tapping". More tapping time means less stressful time spent overworking, and less effort for your mind and eyes. So feel free to use 16 Million Taps to take a break from time to time.
+I first wrote 16 Million Taps years ago as a small native Android app. This is a rewrite in Flutter, so it now runs in the browser as well as on Android, from one codebase. The original, "16 Million Taps Classic", stays where it is, unchanged - this is its cross-platform successor.
 
-## Download from GitHub Releases
+<!-- Screenshots (mobile and desktop PWA) - to add later -->
 
-To download and install the 16 Million Taps app on your Android device, visit the [GitHub Releases page](https://github.com/TheHelloWorldWriter/16MillionTaps/releases) for this repository. Look for the latest release and download the APK file. Once downloaded, open the APK file on your device to install it. If your device blocks installation from unknown sources, go to Settings > Security (or Privacy) > Install unknown apps, and enable it for your browser or file manager.
+## Try it
 
-## Requirements
+Open it in your browser, nothing to install: **https://16milliontaps.thehww.app/**
 
-* **Application requirements:** API level 10+ ("minSdkVersion 10")
-* **Development requirements:** Simply download Android Studio, import the GitHub project, and build it with Gradle.
+You can also install it from the browser as an app.
+
+## What it does
+
+- Tap anywhere; the screen fills with the color matching your count, from black (0) to white (16,777,215).
+- Count in decimal, binary, octal, or hexadecimal.
+- It resumes where you left off, every time.
+- Step back one tap, or jump to any number (a cheat that rather defeats the point).
+- See a color's name where one exists, plus an Info screen with the hex, RGB, your time, and how far you've come.
+- Share the current color as an image.
+- Optional soft tap sound and a faint progress line, both off by default; the light or dark theme follows your system.
+
+## Download for Android
+
+Grab the latest APK from the [Releases page](https://github.com/TheHelloWorldWriter/16MillionTaps/releases). The **universal** APK works on any phone - pick that one if you're not sure; the `arm64-v8a` build is smaller if you prefer.
+
+Requires Android 7.0 or newer. If your device blocks the install, allow installing from unknown sources for your browser or file manager (in Settings, under Security or Apps).
+
+## Build it yourself
+
+It's a Flutter app. With the [Flutter SDK](https://docs.flutter.dev/get-started/install) installed:
+
+```sh
+flutter pub get
+flutter run -d chrome   # run in the browser
+flutter run             # run on a connected Android device
+flutter build web       # build the web app
+flutter build apk       # build the release APKs
+```
 
 ## Contributing
 
-All contributions, large or small, major features, bug fixes, additional language translations are welcomed and appreciated. If you have found a bug or have an idea for a new feature, just [open a new issue](https://github.com/TheHelloWorldWriter/16MillionTaps/issues/new). If you can implement it yourself, simply fork this repository, make your changes and open a pull request.
+Found a bug or have an idea? [Open an issue](https://github.com/TheHelloWorldWriter/16MillionTaps/issues/new). If you'd like to fix it yourself, fork the repo, make your change, and open a pull request. Small fixes are welcome.
 
 ## License
 
-16 Million Taps is distributed under the [MIT License](LICENSE).
+16 Million Taps is open source under the [MIT License](LICENSE).
 
 ---
 
