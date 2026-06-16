@@ -16,9 +16,11 @@ Tap for a few seconds or for an hour - it's up to you, and the next time you ope
 I first wrote 16 Million Taps years ago as a small native Android app. This is a rewrite in Flutter, so it now runs in the browser as well as on Android, from one codebase. The original, "16 Million Taps Classic", stays where it is, unchanged - this is its cross-platform successor.
 
 <p align="center">
-  <img src="repo-assets/screenshot-taps-decimal.webp" alt="Tapping screen: 26,367 in decimal on a blue fill, named Blue Ribbon" height="320">
-  <img src="repo-assets/screenshot-taps-binary.webp" alt="16 Million Taps as a desktop app: the count in binary on a pink fill" height="320">
-  <img src="repo-assets/screenshot-info.webp" alt="Info screen on a gold fill: color name, hex, RGB, and your stats" height="320">
+  <img src="repo-assets/screenshot-taps-decimal.webp" alt="Tapping screen: 26,367 in decimal on a blue fill, named Blue Ribbon" height="380">
+  &nbsp;&nbsp;
+  <img src="repo-assets/screenshot-taps-binary.webp" alt="16 Million Taps as a desktop app: the count in binary on a pink fill" height="240">
+  &nbsp;&nbsp;
+  <img src="repo-assets/screenshot-info.webp" alt="Info screen on a gold fill: color name, hex, RGB, and your stats" height="380">
 </p>
 
 ## Try it
