@@ -1,5 +1,6 @@
 import java.util.Properties
 import java.io.FileInputStream
+import com.android.build.api.variant.FilterConfiguration
 
 plugins {
     id("com.android.application")
@@ -12,6 +13,9 @@ val keystorePropertiesFile = rootProject.file("key.properties")
 if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 }
+
+// Per-ABI APKs are produced only when assembling a release, keeping debug builds single-APK.
+val abiSplitsEnabled = gradle.startParameter.taskNames.any { it.contains("Release") }
 
 android {
     namespace = "com.thehelloworldwriter.sixteen_million_taps"
@@ -47,6 +51,19 @@ android {
             signingConfig = signingConfigs.getByName("release")
         }
     }
+
+    // Emit per-ABI APKs plus a universal one, but only for release assembly, so `flutter run` and
+    // debug stay single-APK and fast. Driving the split through Gradle (instead of
+    // `flutter build apk --split-per-abi`) keeps the Flutter plugin from applying its own
+    // `abiIndex * 1000 + base` versionCode offset, leaving the scheme below as the final word.
+    splits {
+        abi {
+            isEnable = abiSplitsEnabled
+            reset()
+            include("armeabi-v7a", "arm64-v8a", "x86_64")
+            isUniversalApk = true
+        }
+    }
 }
 
 kotlin {
@@ -57,4 +74,22 @@ kotlin {
 
 flutter {
     source = "../.."
+}
+
+// Per-ABI versionCode scheme: the real build number occupies the high digits and the ABI the low
+// digit, so the real version always dominates ordering - an older split can never outrank a newer
+// build, and the base is not capped under 1000. Every output, the universal included (suffix 0),
+// shares one monotonic range. The Gradle-driven split above keeps Flutter from applying its own
+// offset, so this onVariants value is final.
+val abiVersionSuffix = mapOf("armeabi-v7a" to 1, "arm64-v8a" to 2, "x86_64" to 4)
+val baseVersionCode = flutter.versionCode
+androidComponents {
+    onVariants { variant ->
+        variant.outputs.forEach { output ->
+            val abi = output.filters
+                .find { it.filterType == FilterConfiguration.FilterType.ABI }
+                ?.identifier
+            output.versionCode.set(baseVersionCode * 10 + (abiVersionSuffix[abi] ?: 0))
+        }
+    }
 }
