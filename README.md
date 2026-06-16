@@ -1,9 +1,9 @@
 # 16 Million Taps
 
-[![Version badge](https://img.shields.io/github/v/tag/TheHelloWorldWriter/16MillionTaps?color=forestgreen&label=version)](https://github.com/TheHelloWorldWriter/16MillionTaps/releases)
-[![MIT License badge](https://img.shields.io/github/license/TheHelloWorldWriter/16MillionTaps?color=9c0000)](LICENSE)
-[![GitHub Code Size badge](https://img.shields.io/github/languages/code-size/TheHelloWorldWriter/16MillionTaps)](https://github.com/TheHelloWorldWriter/16MillionTaps)
-![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/TheHelloWorldWriter/16MillionTaps/total)
+[![Version](https://img.shields.io/badge/version-v3.0.0-forestgreen)](https://github.com/TheHelloWorldWriter/16MillionTaps/releases)
+[![License: MIT](https://img.shields.io/badge/license-MIT-9c0000)](LICENSE)
+[![Code size](https://img.shields.io/github/languages/code-size/TheHelloWorldWriter/16MillionTaps?cacheSeconds=86400)](https://github.com/TheHelloWorldWriter/16MillionTaps)
+![Downloads](https://img.shields.io/github/downloads/TheHelloWorldWriter/16MillionTaps/total?cacheSeconds=86400)
 
 A calm, mantra-like color tap counter, for the web and Android.
 
@@ -35,9 +35,9 @@ You can also install it from the browser as an app.
 - Count in decimal, binary, octal, or hexadecimal.
 - It resumes where you left off, every time.
 - Step back one tap, or jump to any number (a cheat that rather defeats the point).
-- See a color's name where one exists, plus an Info screen with the hex, RGB, your time, and how far you've come.
+- See a color's name when it has one, plus an Info screen with hex, RGB, time, and progress.
 - Share the current color as an image.
-- Optional soft tap sound and a faint progress line, both off by default; the light or dark theme follows your system.
+- Optional tap sound and progress line, both off by default; theme follows your system.
 
 ## Download for Android
 
