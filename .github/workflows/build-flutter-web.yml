@@ -1,8 +1,7 @@
 name: Build Flutter Web
 
 on:
-  push:
-    branches: [ "main" ]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -32,6 +31,13 @@ jobs:
         run: flutter clean
       - name: Pub Get
         run: flutter pub get
+
+      # Gate: if analyze or tests fail, the job stops here and nothing is published.
+      - name: Analyze
+        run: flutter analyze
+      - name: Test
+        run: flutter test
+
       - name: Build
         run: flutter build web
 
