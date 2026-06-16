@@ -13,7 +13,7 @@ A tapping app seems kind of useless, doesn't it? Try it for a few minutes, or a 
 
 Tap for a few seconds or for an hour - it's up to you, and the next time you open it you continue exactly where you left off. It's fine if you never reach 16 million (though the colors up there are beautiful). As usual, the journey is the destination.
 
-I first wrote 16 Million Taps years ago as a small native Android app. This is a rewrite in Flutter, so it now runs in the browser as well as on Android, from one codebase. The original, "16 Million Taps Classic", stays where it is, unchanged - this is its cross-platform successor.
+I first wrote 16 Million Taps years ago as a small native Android app. This is a rewrite in Flutter, so it now runs in the browser as well as on Android, from one codebase. The original, "[16 Million Taps Classic](https://github.com/TheHelloWorldWriter/16MillionTaps/tree/classic-main)", stays where it is, unchanged - this is its cross-platform successor.
 
 <p align="center">
   <img src="repo-assets/screenshot-taps-decimal.webp" alt="Tapping screen: 26,367 in decimal on a blue fill, named Blue Ribbon" height="380">
